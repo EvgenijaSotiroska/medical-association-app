@@ -1,0 +1,222 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Source+Sans+3:wght@300;400;500;600&display=swap');
+
+/* ── Variables (scoped so they don't conflict with your global CSS) ── */
+.auth-page {
+    --zi-navy: #0f2a52;
+    --zi-navy-hover: #1a3d72;
+    --zi-cream: #f4f0e8;
+    --zi-card-bg: #ffffff;
+    --zi-border: #d6cfc2;
+    --zi-input-bg: #faf8f4;
+    --zi-text: #1a1a2e;
+    --zi-muted: #6b6659;
+    --zi-error: #b84040;
+    --zi-success-bg: #eef4ee;
+    --zi-success-border: #7aab7a;
+    --zi-radius: 10px;
+    --zi-shadow: 0 4px 24px rgba(15, 42, 82, 0.10), 0 1px 4px rgba(15, 42, 82, 0.06);
+
+    min-height: calc(100vh - 64px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--zi-cream);
+    padding: 2rem 1rem;
+    font-family: 'Source Sans 3', sans-serif;
+}
+
+/* ── Card ── */
+.auth-card {
+    background: var(--zi-card-bg);
+    border: 1px solid var(--zi-border);
+    border-radius: var(--zi-radius);
+    box-shadow: var(--zi-shadow);
+    padding: 2.75rem 2.5rem 2.25rem;
+    width: 100%;
+    max-width: 460px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: auth-fade-in 0.35s ease both;
+}
+
+.auth-card--wide {
+    max-width: 560px;
+}
+
+@keyframes auth-fade-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Logo badge ── */
+.auth-logo {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--zi-navy);
+    color: #ffffff;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0.03em;
+    margin-bottom: 1.25rem;
+    flex-shrink: 0;
+}
+
+/* ── Headings ── */
+.auth-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.9rem;
+    font-weight: 600;
+    color: var(--zi-navy);
+    margin: 0 0 0.3rem;
+    letter-spacing: -0.01em;
+}
+
+.auth-subtitle {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: var(--zi-muted);
+    margin: 0 0 1.75rem;
+    letter-spacing: 0.01em;
+}
+
+/* ── Form ── */
+.auth-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+}
+
+/* Two-column row for Register */
+.auth-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+@media (max-width: 480px) {
+    .auth-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ── Field ── */
+.auth-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.auth-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--zi-text);
+    letter-spacing: 0.01em;
+}
+
+.auth-input {
+    background: var(--zi-input-bg);
+    border: 1px solid var(--zi-border);
+    border-radius: 6px;
+    padding: 0.65rem 0.85rem;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 0.975rem;
+    color: var(--zi-text);
+    transition: border-color 0.18s ease, box-shadow 0.18s ease;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.auth-input:focus {
+    border-color: var(--zi-navy);
+    box-shadow: 0 0 0 3px rgba(15, 42, 82, 0.10);
+}
+
+.auth-input::placeholder {
+    color: #b5ad9f;
+}
+
+/* ── Submit button ── */
+.auth-btn {
+    margin-top: 0.4rem;
+    width: 100%;
+    padding: 0.8rem 1rem;
+    background: var(--zi-navy);
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: background 0.18s ease, transform 0.1s ease;
+}
+
+.auth-btn:hover:not(:disabled) {
+    background: var(--zi-navy-hover);
+}
+
+.auth-btn:active:not(:disabled) {
+    transform: translateY(1px);
+}
+
+.auth-btn:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+/* ── Error ── */
+.auth-error {
+    font-size: 0.875rem;
+    color: var(--zi-error);
+    margin: 0;
+    padding: 0.5rem 0.75rem;
+    background: #fdf2f2;
+    border: 1px solid #e8c0c0;
+    border-radius: 5px;
+}
+
+/* ── Success state ── */
+.auth-success {
+    width: 100%;
+    text-align: center;
+    padding: 1.5rem;
+    background: var(--zi-success-bg);
+    border: 1px solid var(--zi-success-border);
+    border-radius: 6px;
+    color: var(--zi-text);
+    font-size: 0.975rem;
+    line-height: 1.6;
+    margin-bottom: 0.5rem;
+}
+
+.auth-success p {
+    margin: 0 0 0.4rem;
+}
+
+/* ── Footer link ── */
+.auth-footer {
+    margin-top: 1.4rem;
+    font-size: 0.9rem;
+    color: var(--zi-muted);
+}
+
+.auth-link {
+    color: var(--zi-navy);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    font-weight: 500;
+    transition: color 0.15s;
+}
+
+.auth-link:hover {
+    color: var(--zi-navy-hover);
+}

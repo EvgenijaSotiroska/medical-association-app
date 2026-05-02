@@ -1,46 +1,81 @@
-import AuthCard from "../components/auth/AuthCard.jsx";
-import { Link } from "react-router";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router";
+import "./AuthPages.css";
+import {useLogin} from "../../hooks/useLogin.js";
 
 export default function LoginPage() {
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const { login, loading, error } = useLogin();
+    const navigate = useNavigate();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            await login(username, password);
+            navigate("/home");
+        } catch (_) {
+            // error handled by hook
+        }
+    };
+
     return (
-        <AuthCard
-            title="Најава"
-            subtitle="за членови и администратори"
-        >
-            <form className="flex flex-col gap-4 text-left">
+        <div className="auth-page">
+            <div className="auth-card">
+                <div className="auth-logo">ЗИ</div>
 
-                <div>
-                    <label className="text-sm font-small">Email</label>
-                    <input
-                        placeholder="Внеси email"
-                        className="input"
-                    />
-                </div>
+                <h1 className="auth-title">Најава</h1>
+                <p className="auth-subtitle">за членови и администратори</p>
 
-                <div>
-                    <label className="text-sm font-medium">Лозинка</label>
-                    <input
-                        type="password"
-                        placeholder="Внеси лозинка"
-                        className="input"
-                    />
-                </div>
+                <form className="auth-form" onSubmit={handleSubmit}>
+                    <div className="auth-field">
+                        <label className="auth-label" htmlFor="username">
+                            Корисничко име
+                        </label>
+                        <input
+                            id="username"
+                            className="auth-input"
+                            type="text"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            required
+                            autoComplete="username"
+                        />
+                    </div>
 
-                <button className="btn-primary w-full mt-2">
-                    Најави се
-                </button>
+                    <div className="auth-field">
+                        <label className="auth-label" htmlFor="password">
+                            Лозинка
+                        </label>
+                        <input
+                            id="password"
+                            className="auth-input"
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                            autoComplete="current-password"
+                        />
+                    </div>
 
-                <p className="text-sm text-center text-gray-600 mt-2">
-                    Нов член?{" "}
-                    <Link
-                        to="/register"
-                        style={{ color: "#0b2a5b", fontWeight: 500 }}
+                    {error && <p className="auth-error">{error}</p>}
+
+                    <button
+                        className="auth-btn"
+                        type="submit"
+                        disabled={loading}
                     >
+                        {loading ? "Се најавува..." : "Најави се"}
+                    </button>
+                </form>
+
+                <p className="auth-footer">
+                    Нов член?{" "}
+                    <Link to="/register" className="auth-link">
                         Аплицирај за членство
                     </Link>
                 </p>
-
-            </form>
-        </AuthCard>
+            </div>
+        </div>
     );
 }

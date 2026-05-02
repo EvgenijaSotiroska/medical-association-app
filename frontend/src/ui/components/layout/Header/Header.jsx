@@ -1,9 +1,10 @@
 import { Link } from "react-router";
+import './Header.css';
 
 export default function Header() {
     return (
         <header className="navbar">
-            <div style={{ fontWeight: "bold", fontSize: "18px", color: "#0b2a5b" }}>
+            <div className="navbar-brand">
                 Здружение на интернисти
             </div>
 

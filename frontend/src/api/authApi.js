@@ -13,7 +13,7 @@ const authApi = {
     },
 
     login: async (username, password) => {
-        const response = await axiosInstance.post("/auth/login", {
+        const response = await axiosInstance.post("/user/login", {
             username,
             password,
         });
