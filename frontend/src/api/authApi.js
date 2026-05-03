@@ -2,14 +2,9 @@ import axiosInstance from "../axios/axios";
 
 
 const authApi = {
-    register: async (firstName, lastName, email, username, password) => {
-        return await axiosInstance.post('/user/register', {
-            firstName,
-            lastName,
-            email,
-            username,
-            password,
-        });
+    register: async (data) => {
+        const response = await axiosInstance.post('/user/register', data);
+        return response.data;
     },
 
     login: async (username, password) => {

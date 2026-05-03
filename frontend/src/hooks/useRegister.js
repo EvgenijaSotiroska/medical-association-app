@@ -5,15 +5,19 @@ export const useRegister = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(false);
+    const [message, setMessage] = useState(null);
 
-    const register = async (firstName, lastName, email, username, password) => {
+    const register = async (formData) => {
         setLoading(true);
         setError(null);
         setSuccess(false);
+        setMessage(null);
 
         try {
-            await authApi.register(firstName, lastName, email, username, password);
+            const data = await authApi.register(formData);
+
             setSuccess(true);
+            setMessage(data?.message);
         } catch (err) {
             setError(err.response?.data?.message || "Registration failed");
             throw err;
@@ -22,5 +26,5 @@ export const useRegister = () => {
         }
     };
 
-    return { register, loading, error, success };
+    return { register, loading, error, success, message };
 };

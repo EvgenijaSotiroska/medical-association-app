@@ -1,18 +1,16 @@
 package medical.association.backend.model.dto;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
-import medical.association.backend.model.domain.User;
+import jakarta.validation.constraints.*;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
+import java.time.LocalDate;
 
 public record RegisterUserRequestDto (
-        String firstName,
-
-        String lastName,
 
         @Email(message = "Invalid email format")
         String email,
 
+        @NotBlank
         String username,
 
         @Size(min = 8, message = "Password must be at least 8 characters")
@@ -20,9 +18,38 @@ public record RegisterUserRequestDto (
                 regexp = "^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).*$",
                 message = "Password must contain uppercase letter, number and special character"
         )
-        String password
-) {
-    public User toUser() {
-        return new User(firstName, lastName, email, username, password);
-    }
-}
+        String password,
+
+        @NotBlank
+        String firstName,
+
+        @NotBlank
+        String lastName,
+
+        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+        LocalDate dateOfBirth,
+
+        @NotBlank
+        String phone,
+
+        @NotBlank
+        String address,
+
+        @NotBlank
+        String institution,
+
+        @NotBlank
+        String position,
+
+        @NotBlank
+        String specialization,
+
+        String subSpecialization,
+
+        @NotBlank
+        String licenseNumber,
+
+        @NotNull
+        Integer graduationYear
+
+) {}

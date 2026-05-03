@@ -1,14 +1,13 @@
 package medical.association.backend.service.impl;
 
 import medical.association.backend.helpers.JwtHelper;
+import medical.association.backend.model.domain.MemberProfile;
 import medical.association.backend.model.domain.User;
-import medical.association.backend.model.dto.LoginUserRequestDto;
-import medical.association.backend.model.dto.LoginUserResponseDto;
-import medical.association.backend.model.dto.RegisterUserRequestDto;
-import medical.association.backend.model.dto.RegisterUserResponseDto;
+import medical.association.backend.model.dto.*;
 import medical.association.backend.model.exception.IncorrectPasswordException;
 import medical.association.backend.model.exception.UserNotFoundException;
 import medical.association.backend.model.exception.UsernameAlreadyExistsException;
+import medical.association.backend.repository.MemberProfileRepository;
 import medical.association.backend.repository.UserRepository;
 import medical.association.backend.service.UserService;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,28 +22,44 @@ public class UserServiceImpl implements UserService {
     private final JwtHelper jwtHelper;
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
+    private final MemberProfileRepository memberProfileRepository;
 
-    public UserServiceImpl(JwtHelper jwtHelper, PasswordEncoder passwordEncoder, UserRepository userRepository) {
+    public UserServiceImpl(JwtHelper jwtHelper, PasswordEncoder passwordEncoder, UserRepository userRepository, MemberProfileRepository memberProfileRepository) {
         this.jwtHelper = jwtHelper;
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
+        this.memberProfileRepository = memberProfileRepository;
     }
 
     @Override
-    public Optional<RegisterUserResponseDto> register(RegisterUserRequestDto registerUserRequestDto) {
+    public Optional<RegisterMemberResponseDto> register(RegisterUserRequestDto registerUserRequestDto) {
         if (userRepository.existsByUsername(registerUserRequestDto.username()))
             throw new UsernameAlreadyExistsException(registerUserRequestDto.username());
 
         User user = new User(
-                registerUserRequestDto.firstName(),
-                registerUserRequestDto.lastName(),
                 registerUserRequestDto.email(),
                 registerUserRequestDto.username(),
                 passwordEncoder.encode(registerUserRequestDto.password())
         );
+        user.setEnabled(false);
         userRepository.save(user);
-        RegisterUserResponseDto displayUserDto = RegisterUserResponseDto.from(user);
-        return Optional.of(displayUserDto);
+        MemberProfile profile = new MemberProfile(
+                registerUserRequestDto.firstName(),
+                registerUserRequestDto.lastName(),
+                registerUserRequestDto.dateOfBirth(),
+                registerUserRequestDto.phone(),
+                registerUserRequestDto.address(),
+                registerUserRequestDto.institution(),
+                registerUserRequestDto.position(),
+                registerUserRequestDto.specialization(),
+                registerUserRequestDto.subSpecialization(),
+                registerUserRequestDto.licenseNumber(),
+                registerUserRequestDto.graduationYear()
+        );
+        profile.setUser(user);
+        memberProfileRepository.save(profile);
+        RegisterMemberResponseDto displayMemberDto = new RegisterMemberResponseDto("Вашата апликација е успешно поднесена. Ќе бидете контактирани по одобрување.");
+        return Optional.of(displayMemberDto);
     }
 
     @Override

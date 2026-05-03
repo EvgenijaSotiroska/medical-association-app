@@ -1,10 +1,7 @@
 package medical.association.backend.web.controller;
 
 import jakarta.validation.Valid;
-import medical.association.backend.model.dto.LoginUserRequestDto;
-import medical.association.backend.model.dto.LoginUserResponseDto;
-import medical.association.backend.model.dto.RegisterUserRequestDto;
-import medical.association.backend.model.dto.RegisterUserResponseDto;
+import medical.association.backend.model.dto.*;
 import medical.association.backend.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +25,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<RegisterUserResponseDto> register(@Valid @RequestBody RegisterUserRequestDto registerUserRequestDto) {
+    public ResponseEntity<RegisterMemberResponseDto> register(@Valid @RequestBody RegisterUserRequestDto registerUserRequestDto) {
         return userService
                 .register(registerUserRequestDto)
                 .map(ResponseEntity::ok)

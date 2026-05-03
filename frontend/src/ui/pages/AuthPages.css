@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Source+Sans+3:wght@300;400;500;600&display=swap');
 
-/* ── Variables (scoped so they don't conflict with your global CSS) ── */
+/* ── Variables ── */
 .auth-page {
     --zi-navy: #0f2a52;
     --zi-navy-hover: #1a3d72;
@@ -16,13 +16,15 @@
     --zi-radius: 10px;
     --zi-shadow: 0 4px 24px rgba(15, 42, 82, 0.10), 0 1px 4px rgba(15, 42, 82, 0.06);
 
-    min-height: calc(100vh - 64px);
+    flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: var(--zi-cream);
     padding: 2rem 1rem;
     font-family: 'Source Sans 3', sans-serif;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 /* ── Card ── */
@@ -38,6 +40,7 @@
     flex-direction: column;
     align-items: center;
     animation: auth-fade-in 0.35s ease both;
+    box-sizing: border-box;
 }
 
 .auth-card--wide {
@@ -75,6 +78,7 @@
     color: var(--zi-navy);
     margin: 0 0 0.3rem;
     letter-spacing: -0.01em;
+    text-align: center;
 }
 
 .auth-subtitle {
@@ -83,6 +87,7 @@
     color: var(--zi-muted);
     margin: 0 0 1.75rem;
     letter-spacing: 0.01em;
+    text-align: center;
 }
 
 /* ── Form ── */
@@ -93,17 +98,11 @@
     gap: 1.1rem;
 }
 
-/* Two-column row for Register */
+/* Two-column row */
 .auth-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
-}
-
-@media (max-width: 480px) {
-    .auth-row {
-        grid-template-columns: 1fr;
-    }
 }
 
 /* ── Field ── */
@@ -184,7 +183,7 @@
     border-radius: 5px;
 }
 
-/* ── Success state ── */
+/* ── Success ── */
 .auth-success {
     width: 100%;
     text-align: center;
@@ -207,6 +206,7 @@
     margin-top: 1.4rem;
     font-size: 0.9rem;
     color: var(--zi-muted);
+    text-align: center;
 }
 
 .auth-link {
@@ -219,4 +219,86 @@
 
 .auth-link:hover {
     color: var(--zi-navy-hover);
+}
+
+/* ── Section labels (Register) ── */
+.auth-section-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--zi-navy);
+    border-bottom: 1px solid var(--zi-border);
+    padding-bottom: 0.4rem;
+    margin-bottom: 0.1rem;
+    width: 100%;
+}
+
+/* ── File input ── */
+.auth-input--file {
+    padding: 0.45rem 0.75rem;
+    cursor: pointer;
+    font-size: 0.875rem;
+    color: var(--zi-muted);
+}
+
+.auth-input--file::file-selector-button {
+    background: var(--zi-navy);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 4px 12px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background 0.15s;
+}
+
+.auth-input--file::file-selector-button:hover {
+    background: var(--zi-navy-hover);
+}
+
+/* ════════════════════════════════
+   RESPONSIVE
+   ════════════════════════════════ */
+
+/* Tablet */
+@media (max-width: 600px) {
+    .auth-page {
+        padding: 1.25rem 0.75rem;
+        align-items: flex-start;
+    }
+
+    .auth-card {
+        padding: 2rem 1.25rem 1.75rem;
+        border-radius: 8px;
+    }
+
+    /* Stack two-column rows on mobile */
+    .auth-row {
+        grid-template-columns: 1fr;
+        gap: 1.1rem;
+    }
+
+    .auth-title {
+        font-size: 1.55rem;
+    }
+}
+
+/* Small phone */
+@media (max-width: 380px) {
+    .auth-card {
+        padding: 1.5rem 1rem 1.5rem;
+    }
+
+    .auth-title {
+        font-size: 1.35rem;
+    }
+
+    .auth-input {
+        font-size: 0.9rem;
+        padding: 0.6rem 0.7rem;
+    }
 }
