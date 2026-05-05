@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import "./AuthPages.css";
-import {useLogin} from "../../hooks/useLogin.js";
+import {useLogin} from "../../../hooks/auth/useLogin.js";
 
 export default function LoginPage() {
     const [username, setUsername] = useState("");

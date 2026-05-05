@@ -16,7 +16,7 @@ export default function Header() {
                 <nav className="nav-links">
                     <Link to="/">Почетна</Link>
                     <Link to="/announcements">Соопштенија</Link>
-                    <Link to="/membership">Членство</Link>
+                    <Link to="/register">Членство</Link>
                     <Link to="/apply">Пријава за настан</Link>
                 </nav>
 
@@ -39,7 +39,7 @@ export default function Header() {
                 <Link to="/"             onClick={() => setMenuOpen(false)}>Почетна</Link>
                 <Link to="/announcements" onClick={() => setMenuOpen(false)}>Соопштенија</Link>
                 <Link to="/membership"   onClick={() => setMenuOpen(false)}>Членство</Link>
-                <Link to="/apply"        onClick={() => setMenuOpen(false)}>Пријава за настан</Link>
+                <Link to="/register"        onClick={() => setMenuOpen(false)}>Пријава за настан</Link>
                 <button className="btn-primary" onClick={() => setMenuOpen(false)}>Најава</button>
             </nav>
         </>

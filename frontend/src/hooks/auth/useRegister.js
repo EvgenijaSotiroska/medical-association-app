@@ -1,5 +1,5 @@
 import { useState } from "react";
-import authApi from "../api/authApi.js";
+import authApi from "../../api/authApi.js";
 
 export const useRegister = () => {
     const [loading, setLoading] = useState(false);

@@ -4,6 +4,7 @@ import medical.association.backend.helpers.JwtHelper;
 import medical.association.backend.model.domain.MemberProfile;
 import medical.association.backend.model.domain.User;
 import medical.association.backend.model.dto.*;
+import medical.association.backend.model.exception.AccountNotApprovedException;
 import medical.association.backend.model.exception.IncorrectPasswordException;
 import medical.association.backend.model.exception.UserNotFoundException;
 import medical.association.backend.model.exception.UsernameAlreadyExistsException;
@@ -66,6 +67,10 @@ public class UserServiceImpl implements UserService {
     public Optional<LoginUserResponseDto> login(LoginUserRequestDto loginUserRequestDto) {
        User user = userRepository.findByUsername(loginUserRequestDto.username())
                .orElseThrow(() -> new UserNotFoundException(loginUserRequestDto.username()));
+
+       if(!user.isEnabled()){
+           throw new AccountNotApprovedException();
+       }
 
        if(!passwordEncoder.matches(loginUserRequestDto.password(), user.getPassword()))
            throw new IncorrectPasswordException();

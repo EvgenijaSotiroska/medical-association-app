@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router";
+import { Link } from "react-router";
 import "./AuthPages.css";
-import { useRegister } from "../../hooks/useRegister.js";
+import { useRegister } from "../../../hooks/auth/useRegister.js";
 
 export default function RegisterPage() {
     const [form, setForm] = useState({

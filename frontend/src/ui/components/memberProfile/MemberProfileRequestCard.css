@@ -1,0 +1,109 @@
+.member-card {
+    background: #ffffff;
+    border: 1px solid #d6cfc2;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(15, 42, 82, 0.07);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    cursor: pointer;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.member-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 28px rgba(15, 42, 82, 0.13);
+    border-color: #b8b0a2;
+}
+
+/* ── Avatar ── */
+.member-card__avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: #0f2a52;
+    color: #ffffff;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0.03em;
+    flex-shrink: 0;
+}
+
+/* ── Body ── */
+.member-card__body {
+    flex: 1;
+}
+
+.member-card__name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #0f2a52;
+    margin: 0 0 0.2rem;
+}
+
+.member-card__role {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #2d3748;
+    margin: 0 0 0.15rem;
+}
+
+.member-card__institution {
+    font-size: 0.825rem;
+    color: #6b6659;
+    margin: 0;
+}
+
+/* ── Footer ── */
+.member-card__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 0.75rem;
+    border-top: 1px solid #ede8df;
+}
+
+.member-card__status {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+}
+
+.member-card__status--approved {
+    background: #eef4ee;
+    color: #3a7a3a;
+    border: 1px solid #a8cfa8;
+}
+
+.member-card__status--pending {
+    background: #fef8ec;
+    color: #8a6a00;
+    border: 1px solid #e5cb7a;
+}
+
+.member-card__status--rejected {
+    background: #fdf2f2;
+    color: #b84040;
+    border: 1px solid #e8c0c0;
+}
+
+.member-card__cta {
+    font-size: 0.825rem;
+    font-weight: 600;
+    color: #0f2a52;
+    letter-spacing: 0.01em;
+    transition: letter-spacing 0.15s;
+}
+
+.member-card:hover .member-card__cta {
+    letter-spacing: 0.04em;
+}
