@@ -1,0 +1,187 @@
+.ann-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+
+/* Hero */
+.ann-hero {
+    margin-bottom: 2.5rem;
+}
+
+.ann-hero__sup {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: #2563eb;
+    text-transform: uppercase;
+    margin: 0 0 0.5rem;
+}
+
+.ann-hero__title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #111827;
+    margin: 0 0 0.75rem;
+    line-height: 1.2;
+}
+
+.ann-hero__sub {
+    font-size: 1rem;
+    color: #6b7280;
+    max-width: 560px;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Filters */
+.ann-filters {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 2.5rem;
+}
+
+.ann-filter-btn {
+    padding: 0.5rem 1.25rem;
+    border-radius: 999px;
+    border: 1.5px solid #d1d5db;
+    background: #fff;
+    color: #374151;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.ann-filter-btn:hover {
+    border-color: #2563eb;
+    color: #2563eb;
+}
+
+.ann-filter-btn.active {
+    background: #1e3a5f;
+    color: #fff;
+    border-color: #1e3a5f;
+}
+
+/* Grid — 3 во ред */
+.ann-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+@media (max-width: 900px) {
+    .ann-grid { grid-template-columns: repeat(2, 1fr); }
+    .ann-hero__title { font-size: 1.8rem; }
+}
+
+@media (max-width: 580px) {
+    .ann-grid { grid-template-columns: 1fr; }
+}
+
+/* Card */
+.ann-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.ann-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+/* Image */
+.ann-card__img-wrapper {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+}
+
+.ann-card__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+}
+
+.ann-card:hover .ann-card__img {
+    transform: scale(1.04);
+}
+
+.ann-card__img-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Body */
+.ann-card__body {
+    padding: 1.25rem;
+}
+
+.ann-card__meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.6rem;
+}
+
+.ann-card__type {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.2rem 0.65rem;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.ann-card__type--congress  { background: #dbeafe; color: #1d4ed8; }
+.ann-card__type--seminar   { background: #d1fae5; color: #065f46; }
+.ann-card__type--document  { background: #fef3c7; color: #92400e; }
+.ann-card__type--news      { background: #f3e8ff; color: #6b21a8; }
+
+.ann-card__date {
+    font-size: 0.82rem;
+    color: #6b7280;
+}
+
+.ann-card__title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 0.5rem;
+    line-height: 1.4;
+}
+
+.ann-card__desc {
+    font-size: 0.88rem;
+    color: #6b7280;
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 0.75rem;
+}
+
+.ann-card__author {
+    font-size: 0.82rem;
+    color: #9ca3af;
+    margin: 0;
+}
+
+/* Empty */
+.ann-empty {
+    text-align: center;
+    color: #9ca3af;
+    padding: 4rem 0;
+    font-size: 1rem;
+}

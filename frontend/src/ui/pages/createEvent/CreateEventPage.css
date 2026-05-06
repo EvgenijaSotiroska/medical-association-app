@@ -1,0 +1,161 @@
+.create-page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+
+.create-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 2.5rem 3rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+.create-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 0.25rem;
+}
+
+.create-subtitle {
+    font-size: 0.95rem;
+    color: #9ca3af;
+    margin: 0 0 2rem;
+}
+
+/* Form */
+.create-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.create-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    flex: 1;
+}
+
+.create-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.create-label {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #374151;
+}
+
+.create-input {
+    padding: 0.65rem 0.9rem;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: #111827;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.create-input:focus {
+    border-color: #2563eb;
+}
+
+.create-textarea {
+    resize: vertical;
+    min-height: 120px;
+    font-family: inherit;
+}
+
+/* Type buttons */
+.create-type-btns {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.create-type-btn {
+    padding: 0.5rem 1.5rem;
+    border-radius: 8px;
+    border: 1.5px solid #e5e7eb;
+    background: #fff;
+    color: #374151;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.create-type-btn:hover {
+    border-color: #2563eb;
+    color: #2563eb;
+}
+
+.create-type-btn.active {
+    background: #1e3a5f;
+    color: #fff;
+    border-color: #1e3a5f;
+}
+
+/* Submit button */
+.create-btn {
+    background: #1e3a5f;
+    color: #fff;
+    border: none;
+    padding: 0.8rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    width: 100%;
+}
+
+.create-btn:hover {
+    background: #2563eb;
+}
+
+.create-btn:disabled {
+    background: #9ca3af;
+    cursor: not-allowed;
+}
+
+.create-btn--outline {
+    background: #fff;
+    color: #1e3a5f;
+    border: 1.5px solid #1e3a5f;
+}
+
+.create-btn--outline:hover {
+    background: #f1f5f9;
+}
+
+/* Success */
+.create-success {
+    text-align: center;
+    padding: 2rem 0;
+}
+
+.create-success p {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #065f46;
+    margin-bottom: 1.5rem;
+}
+
+.create-success__actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+/* Error */
+.create-error {
+    color: #dc2626;
+    font-size: 0.88rem;
+    margin: 0;
+}

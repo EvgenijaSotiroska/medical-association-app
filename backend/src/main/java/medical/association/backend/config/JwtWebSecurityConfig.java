@@ -74,7 +74,9 @@ public class JwtWebSecurityConfig {
                                         "/api/user/register",
                                         "/api/user/login",
                                         "/api/memberProfiles/pending",
-                                        "/api/memberProfiles/{id}/changeStatus"
+                                        "/api/memberProfiles/{id}/changeStatus",
+                                        "/api/events/**",
+                                        "/api/publications/**"
                                 )
                                 .permitAll()
                 )
