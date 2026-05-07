@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
-import eventApi from "../../../api/eventApi.js";
-import publicationApi from "../../../api/publicationApi.js";
+import eventApi from "../../../../api/eventApi.js";
+import publicationApi from "../../../../api/publicationApi.js";
 import "./EditAnnouncementPage.css";
 
 export default function EditAnnouncementPage() {

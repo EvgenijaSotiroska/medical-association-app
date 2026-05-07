@@ -1,9 +1,10 @@
 import { useParams, useNavigate } from "react-router";
 import { useState, useEffect } from "react";
-import eventApi from "../../../api/eventApi.js";
-import publicationApi from "../../../api/publicationApi.js";
-import useRegisterForEvent from "../../../hooks/eventRegistrations/useRegisterForEvent.js";
+import eventApi from "../../../../api/eventApi.js";
+import publicationApi from "../../../../api/publicationApi.js";
+import useRegisterForEvent from "../../../../hooks/eventRegistrations/useRegisterForEvent.js";
 import "./AnnouncementDetailPage.css";
+import {getUserRole} from "../../../../utils/auth.js";
 
 export default function AnnouncementDetailPage() {
     const { id } = useParams();
@@ -16,7 +17,8 @@ export default function AnnouncementDetailPage() {
     const [deleting, setDeleting] = useState(false);
     const { register, loading: registering, success, error: registerError } = useRegisterForEvent();
 
-    const isAdmin = true;
+    const role = getUserRole();
+    const isAdmin = role === "ROLE_ADMINISTRATOR";
 
     useEffect(() => {
         setLoading(true);

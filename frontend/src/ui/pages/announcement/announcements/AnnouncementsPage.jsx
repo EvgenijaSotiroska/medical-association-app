@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router";
-import useEvents from "../../../hooks/events/useEvents.js";
-import usePublications from "../../../hooks/publications/usePublications.js";
+import useEvents from "../../../../hooks/events/useEvents.js";
+import usePublications from "../../../../hooks/publications/usePublications.js";
 import "./AnnouncementsPage.css";
 
 const FILTERS = [

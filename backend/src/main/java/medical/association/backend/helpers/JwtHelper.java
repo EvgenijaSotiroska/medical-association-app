@@ -60,7 +60,14 @@ public class JwtHelper {
 
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> extraClaims = new HashMap<>();
-        extraClaims.put("roles", userDetails.getAuthorities());
+        extraClaims.put(
+                "roles",
+                userDetails.getAuthorities()
+                        .stream()
+                        .map(a -> a.getAuthority())
+                        .toList()
+        );
+
         return buildToken(extraClaims, userDetails.getUsername(), JwtConstants.EXPIRATION_TIME);
     }
 

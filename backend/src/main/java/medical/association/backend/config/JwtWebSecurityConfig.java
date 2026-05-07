@@ -5,6 +5,7 @@ import java.util.List;
 import medical.association.backend.web.filter.JwtFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
@@ -72,13 +73,33 @@ public class JwtWebSecurityConfig {
                                         "/swagger-ui/**",
                                         "/v3/api-docs/**",
                                         "/api/user/register",
-                                        "/api/user/login",
-                                        "/api/memberProfiles/pending",
-                                        "/api/memberProfiles/{id}/changeStatus",
-                                        "/api/events/**",
-                                        "/api/publications/**"
+                                        "/api/user/login"
                                 )
                                 .permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/publications/**")
+                                .authenticated()
+                                .requestMatchers(HttpMethod.POST, "/api/publications")
+                                .hasRole("ADMINISTRATOR")
+                                .requestMatchers(HttpMethod.PUT, "/api/publications/**")
+                                .hasRole("ADMINISTRATOR")
+                                .requestMatchers(HttpMethod.DELETE, "/api/publications/**")
+                                .hasRole("ADMINISTRATOR")
+                                .requestMatchers(HttpMethod.GET, "/api/events/**")
+                                .authenticated()
+                                .requestMatchers(HttpMethod.POST, "/api/events/*/register/*")
+                                .authenticated()
+                                .requestMatchers(HttpMethod.GET, "/api/events/*/registrations")
+                                .hasRole("ADMINISTRATOR")
+                                .requestMatchers(HttpMethod.POST, "/api/events/**")
+                                .hasRole("ADMINISTRATOR")
+                                .requestMatchers(HttpMethod.PUT, "/api/events/**")
+                                .hasRole("ADMINISTRATOR")
+                                .requestMatchers(HttpMethod.DELETE, "/api/events/**")
+                                .hasRole("ADMINISTRATOR")
+                                .requestMatchers("/api/memberProfiles/**")
+                                .hasRole("ADMINISTRATOR")
+                                .anyRequest()
+                                .authenticated()
                 )
                 .sessionManagement(sessionManagementConfigurer ->
                         sessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS)

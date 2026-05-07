@@ -1,19 +1,17 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import useCreateEvent from "../../../hooks/events/useCreateEvent.js";
-import "./CreateEventPage.css";
+import useCreatePublication from "../../../../hooks/publications/useCreatePublication.js";
+import "./CreatePublicationPage.css";
 
-export default function CreateEventPage() {
+export default function CreatePublicationPage() {
     const [form, setForm] = useState({
         title: "",
         description: "",
-        eventDate: "",
-        location: "",
         imageUrl: "",
-        type: "CONGRESS"
+        type: "NEWS"
     });
 
-    const { createEvent, loading, error, success } = useCreateEvent();
+    const { createPublication, loading, error, success } = useCreatePublication();
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -24,24 +22,24 @@ export default function CreateEventPage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await createEvent(form);
+            await createPublication(form);
         } catch (_) {}
     };
 
     const typeLabel = {
-        CONGRESS: "Конгрес",
-        SEMINAR: "Семинар"
+        NEWS: "Новост",
+        DOCUMENT: "Документ"
     };
 
     return (
         <div className="create-page">
             <div className="create-card">
-                <h1 className="create-title">Креирај настан</h1>
-                <p className="create-subtitle">Конгрес или семинар</p>
+                <h1 className="create-title">Креирај објава</h1>
+                <p className="create-subtitle">Документ или новост</p>
 
                 {success ? (
                     <div className="create-success">
-                        <p>✅ Настанот е успешно креиран!</p>
+                        <p>✅ Објавата е успешно креирана!</p>
                         <div className="create-success__actions">
                             <button
                                 className="create-btn"
@@ -51,29 +49,24 @@ export default function CreateEventPage() {
                             </button>
                             <button
                                 className="create-btn create-btn--outline"
-                                onClick={() => {
-                                    setForm({
-                                        title: "",
-                                        description: "",
-                                        eventDate: "",
-                                        location: "",
-                                        imageUrl: "",
-                                        type: "CONGRESS"
-                                    });
-                                }}
+                                onClick={() => setForm({
+                                    title: "",
+                                    description: "",
+                                    imageUrl: "",
+                                    type: "NEWS"
+                                })}
                             >
-                                Креирај уште еден
+                                Креирај уште една
                             </button>
                         </div>
                     </div>
                 ) : (
                     <form className="create-form" onSubmit={handleSubmit}>
 
-                        {/* Type */}
                         <div className="create-field">
-                            <label className="create-label">Тип на настан</label>
+                            <label className="create-label">Тип на објава</label>
                             <div className="create-type-btns">
-                                {["CONGRESS", "SEMINAR"].map(t => (
+                                {["NEWS", "DOCUMENT"].map(t => (
                                     <button
                                         key={t}
                                         type="button"
@@ -86,7 +79,6 @@ export default function CreateEventPage() {
                             </div>
                         </div>
 
-                        {/* Title */}
                         <div className="create-field">
                             <label className="create-label">Наслов</label>
                             <input
@@ -94,12 +86,11 @@ export default function CreateEventPage() {
                                 className="create-input"
                                 value={form.title}
                                 onChange={handleChange}
-                                placeholder="Наслов на настанот"
+                                placeholder="Наслов на објавата"
                                 required
                             />
                         </div>
 
-                        {/* Description */}
                         <div className="create-field">
                             <label className="create-label">Опис</label>
                             <textarea
@@ -107,39 +98,12 @@ export default function CreateEventPage() {
                                 className="create-input create-textarea"
                                 value={form.description}
                                 onChange={handleChange}
-                                placeholder="Опис на настанот"
+                                placeholder="Опис на објавата"
                                 rows={5}
                                 required
                             />
                         </div>
 
-                        {/* Date + Location */}
-                        <div className="create-row">
-                            <div className="create-field">
-                                <label className="create-label">Датум</label>
-                                <input
-                                    type="date"
-                                    name="eventDate"
-                                    className="create-input"
-                                    value={form.eventDate}
-                                    onChange={handleChange}
-                                    required
-                                />
-                            </div>
-                            <div className="create-field">
-                                <label className="create-label">Локација</label>
-                                <input
-                                    name="location"
-                                    className="create-input"
-                                    value={form.location}
-                                    onChange={handleChange}
-                                    placeholder="Град, место..."
-                                    required
-                                />
-                            </div>
-                        </div>
-
-                        {/* Image URL */}
                         <div className="create-field">
                             <label className="create-label">URL на слика</label>
                             <input
@@ -158,7 +122,7 @@ export default function CreateEventPage() {
                             type="submit"
                             disabled={loading}
                         >
-                            {loading ? "Се креира..." : "Креирај настан"}
+                            {loading ? "Се креира..." : "Креирај објава"}
                         </button>
                     </form>
                 )}
