@@ -10,13 +10,16 @@ import CreateEventPage from "./ui/pages/announcement/createEvent/CreateEventPage
 import CreatePublicationPage from "./ui/pages/announcement/createPublication/CreatePublicationPage.jsx";
 import EditAnnouncementPage from "./ui/pages/announcement/editAnnouncement/EditAnnouncementPage.jsx";
 import ProtectedRoute from "./ui/pages/auth/ProtectedRoute.jsx";
+import HomePage from "./ui/pages/home/HomePage.jsx";
 
 function App() {
     return (
         <BrowserRouter>
             <Routes>
+
                 <Route path='/' element={<Layout/>}>
-                    <Route index element={<LoginPage/>}/>
+                    <Route index element={<HomePage/>} />
+                    <Route path='login' element={<LoginPage/>}/>
                     <Route path='register' element={<RegisterPage/>}/>
                     <Route path='announcements' element={<AnnouncementsPage/>}/>
                     <Route path='announcements/event/:id' element={<AnnouncementDetailPage/>}/>

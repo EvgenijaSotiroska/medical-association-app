@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router";
+import {useState} from "react";
+import {Link, useNavigate, useLocation} from "react-router";
 import './Header.css';
 import {getUserRole} from "../../../../utils/auth.js";
 
@@ -62,7 +62,7 @@ export default function Header() {
                         Одјави се
                     </button>
                 ) : (
-                    <Link to="/" className="btn-primary">
+                    <Link to="/login" className="btn-primary">
                         Најава
                     </Link>
                 )}
@@ -72,27 +72,35 @@ export default function Header() {
                     onClick={() => setMenuOpen((o) => !o)}
                     aria-label="Мени"
                 >
-                    <span />
-                    <span />
-                    <span />
+                    <span/>
+                    <span/>
+                    <span/>
                 </button>
             </header>
 
             <nav className={`nav-mobile-drawer ${menuOpen ? "open" : ""}`}>
                 <Link to="/" className={isActive("/")} onClick={() => setMenuOpen(false)}>Почетна</Link>
-                <Link to="/register" className={isActive("/register")} onClick={() => setMenuOpen(false)}>Членство</Link>
+                <Link to="/register" className={isActive("/register")}
+                      onClick={() => setMenuOpen(false)}>Членство</Link>
                 {isAuthenticated && (
                     <>
-                        <Link to="/announcements" className={isActive("/announcements")} onClick={() => setMenuOpen(false)}>Соопштенија</Link>
-                        <Link to="/create-event" className={isActive("/create-event")} onClick={() => setMenuOpen(false)}>Креирај настан</Link>
-                        <Link to="/create-publication" className={isActive("/create-publication")} onClick={() => setMenuOpen(false)}>Креирај објава</Link>
-                        <Link to="/memberRequests" className={isActive("/memberRequests")} onClick={() => setMenuOpen(false)}>Барања за членство</Link>
+                        <Link to="/announcements" className={isActive("/announcements")}
+                              onClick={() => setMenuOpen(false)}>Соопштенија</Link>
+                        <Link to="/create-event" className={isActive("/create-event")}
+                              onClick={() => setMenuOpen(false)}>Креирај настан</Link>
+                        <Link to="/create-publication" className={isActive("/create-publication")}
+                              onClick={() => setMenuOpen(false)}>Креирај објава</Link>
+                        <Link to="/memberRequests" className={isActive("/memberRequests")}
+                              onClick={() => setMenuOpen(false)}>Барања за членство</Link>
                     </>
                 )}
                 {isAuthenticated ? (
                     <button
                         className="btn-primary"
-                        onClick={() => { handleLogout(); setMenuOpen(false); }}
+                        onClick={() => {
+                            handleLogout();
+                            setMenuOpen(false);
+                        }}
                     >
                         Одјави се
                     </button>

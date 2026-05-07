@@ -13,7 +13,7 @@ export default function LoginPage() {
         e.preventDefault();
         try {
             await login(username, password);
-            navigate("/home");
+            navigate("/");
         } catch (_) {
             // error handled by hook
         }
