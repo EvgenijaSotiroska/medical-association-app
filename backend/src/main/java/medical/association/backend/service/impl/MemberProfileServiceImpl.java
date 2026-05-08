@@ -2,6 +2,7 @@ package medical.association.backend.service.impl;
 
 import medical.association.backend.enumeration.MembershipStatus;
 import medical.association.backend.model.domain.MemberProfile;
+import medical.association.backend.model.dto.ApprovedMemberDto;
 import medical.association.backend.model.dto.MemberProfileDisplayDto;
 import medical.association.backend.repository.MemberProfileRepository;
 import medical.association.backend.service.MemberProfileService;
@@ -63,5 +64,29 @@ public class MemberProfileServiceImpl implements MemberProfileService {
 
                     return memberProfileRepository.save(profile);
                 });
+    }
+
+    @Override
+    public List<ApprovedMemberDto> getApprovedProfiles() {
+        return memberProfileRepository.findByStatus(MembershipStatus.APPROVED)
+                .stream()
+                .map(p -> new ApprovedMemberDto(
+                        p.getId(),
+                        p.getFirstName(),
+                        p.getLastName(),
+                        p.getDateOfBirth(),
+                        p.getPhone(),
+                        p.getAddress(),
+                        p.getUser().getUsername(),
+                        p.getUser().getEmail(),
+                        p.getSpecialization(),
+                        p.getInstitution(),
+                        p.getPosition(),
+                        p.getSubSpecialization(),
+                        p.getLicenseNumber(),
+                        p.getGraduationYear(),
+                        p.getStatus()
+                ))
+                .toList();
     }
 }

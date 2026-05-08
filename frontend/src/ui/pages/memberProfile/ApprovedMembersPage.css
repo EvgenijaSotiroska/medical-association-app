@@ -1,0 +1,27 @@
+/*.approved-members {*/
+/*    padding: 2rem;*/
+/*    max-width: 1200px;*/
+/*    margin: 0 auto;*/
+/*}*/
+
+/*.approved-members__title {*/
+/*    font-size: 1.75rem;*/
+/*    font-weight: 700;*/
+/*    margin-bottom: 1.5rem;*/
+/*    color: var(--color-text, #1a1a1a);*/
+/*}*/
+
+/*.approved-members__grid {*/
+/*    display: grid;*/
+/*    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));*/
+/*    gap: 1.25rem;*/
+/*}*/
+
+/*.approved-members__loading,*/
+/*.approved-members__empty {*/
+/*    text-align: center;*/
+/*    color: #666;*/
+/*    margin-top: 3rem;*/
+/*    font-size: 1rem;*/
+/*}*/
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Source+Sans+3:wght@300;400;500;600&display=swap');

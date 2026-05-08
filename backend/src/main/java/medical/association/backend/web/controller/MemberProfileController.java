@@ -2,6 +2,7 @@ package medical.association.backend.web.controller;
 
 import medical.association.backend.enumeration.MembershipStatus;
 import medical.association.backend.model.domain.MemberProfile;
+import medical.association.backend.model.dto.ApprovedMemberDto;
 import medical.association.backend.model.dto.MemberProfileDisplayDto;
 import medical.association.backend.service.MemberProfileService;
 import org.springframework.http.ResponseEntity;
@@ -40,5 +41,10 @@ public class MemberProfileController {
     public ResponseEntity<MemberProfile> changeStatus(@PathVariable Long id, @RequestBody MembershipStatus status){
         return memberProfileService.changeStatus(id, status).map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/approved")
+    public ResponseEntity<List<ApprovedMemberDto>> findApprovedMembers() {
+        return ResponseEntity.ok(memberProfileService.getApprovedProfiles());
     }
 }

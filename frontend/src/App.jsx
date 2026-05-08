@@ -11,7 +11,7 @@ import CreatePublicationPage from "./ui/pages/announcement/createPublication/Cre
 import EditAnnouncementPage from "./ui/pages/announcement/editAnnouncement/EditAnnouncementPage.jsx";
 import ProtectedRoute from "./ui/pages/auth/ProtectedRoute.jsx";
 import HomePage from "./ui/pages/home/HomePage.jsx";
-
+import ApprovedMembersPage from "./ui/pages/memberProfile/ApprovedMembersPage.jsx";
 function App() {
     return (
         <BrowserRouter>
@@ -27,6 +27,10 @@ function App() {
                     <Route path='memberRequests' element={
                         <ProtectedRoute requiredRole="ROLE_ADMINISTRATOR">
                             <MemberProfileRequestsPage />
+                        </ProtectedRoute>} />
+                    <Route path='approvedMembers' element={
+                        <ProtectedRoute requiredRole="ROLE_ADMINISTRATOR">
+                            <ApprovedMembersPage />
                         </ProtectedRoute>} />
                     <Route path='create-event' element={
                         <ProtectedRoute requiredRole="ROLE_ADMINISTRATOR">

@@ -12,7 +12,11 @@ const memberProfileApi = {
     changeStatus: async (id, status) => {
         return await axiosInstance.post(
             `/memberProfiles/${id}/changeStatus`, status);
-    }
+    },
+
+    findAllApproved: async () => {
+        return await axiosInstance.get('/memberProfiles/approved');
+    },
 };
 
 export default memberProfileApi;

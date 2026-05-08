@@ -48,6 +48,9 @@ export default function Header() {
                             <Link to="/memberRequests" className={isActive("/memberRequests")}>
                                 Барања за членство
                             </Link>
+                            <Link to="/approvedMembers" className={isActive("/approvedMembers")}>
+                                Одобрени членови
+                            </Link>
                         </>
                     )}
                     {isAuthenticated && (
@@ -92,6 +95,8 @@ export default function Header() {
                               onClick={() => setMenuOpen(false)}>Креирај објава</Link>
                         <Link to="/memberRequests" className={isActive("/memberRequests")}
                               onClick={() => setMenuOpen(false)}>Барања за членство</Link>
+                        <Link to="/approvedMembers" className={isActive("/approvedMembers")}
+                              onClick={() => setMenuOpen(false)}>Одобрени членови</Link>
                     </>
                 )}
                 {isAuthenticated ? (
