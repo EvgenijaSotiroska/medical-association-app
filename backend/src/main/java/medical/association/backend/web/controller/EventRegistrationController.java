@@ -28,4 +28,19 @@ public class EventRegistrationController {
             @PathVariable Long eventId) {
         return ResponseEntity.ok(eventRegistrationService.findByEventId(eventId));
     }
+
+    @GetMapping("/{eventId}/is-registered/{memberId}")
+    public ResponseEntity<Boolean> isRegistered(
+            @PathVariable Long eventId,
+            @PathVariable Long memberId) {
+        return ResponseEntity.ok(eventRegistrationService.isRegistered(eventId, memberId));
+    }
+
+    @DeleteMapping("/{eventId}/cancel/{memberId}")
+    public ResponseEntity<Void> cancel(
+            @PathVariable Long eventId,
+            @PathVariable Long memberId) {
+        eventRegistrationService.cancelRegistration(eventId, memberId);
+        return ResponseEntity.noContent().build();
+    }
 }

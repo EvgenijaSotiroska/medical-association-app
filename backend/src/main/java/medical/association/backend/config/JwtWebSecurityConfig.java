@@ -74,6 +74,7 @@ public class JwtWebSecurityConfig {
                                         "/v3/api-docs/**",
                                         "/api/user/register",
                                         "/api/user/login"
+
                                 )
                                 .permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/publications/**")
@@ -84,12 +85,16 @@ public class JwtWebSecurityConfig {
                                 .hasRole("ADMINISTRATOR")
                                 .requestMatchers(HttpMethod.DELETE, "/api/publications/**")
                                 .hasRole("ADMINISTRATOR")
-                                .requestMatchers(HttpMethod.GET, "/api/events/**")
-                                .authenticated()
-                                .requestMatchers(HttpMethod.POST, "/api/events/*/register/*")
+                                .requestMatchers(HttpMethod.GET, "/api/events/*/is-registered/*")
                                 .authenticated()
                                 .requestMatchers(HttpMethod.GET, "/api/events/*/registrations")
                                 .hasRole("ADMINISTRATOR")
+                                .requestMatchers(HttpMethod.POST, "/api/events/*/register/*")
+                                .authenticated()
+                                .requestMatchers(HttpMethod.DELETE, "/api/events/*/cancel/*")
+                                .authenticated()
+                                .requestMatchers(HttpMethod.GET, "/api/events/**")
+                                .authenticated()
                                 .requestMatchers(HttpMethod.POST, "/api/events/**")
                                 .hasRole("ADMINISTRATOR")
                                 .requestMatchers(HttpMethod.PUT, "/api/events/**")

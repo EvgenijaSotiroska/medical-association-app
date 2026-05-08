@@ -31,6 +31,14 @@ const eventApi = {
     update: async (id, data) => {
         return await axiosInstance.put(`/events/${id}`, data);
     },
+    isRegistered: async (eventId, memberId) => {
+        return await axiosInstance.get(`/events/${eventId}/is-registered/${memberId}`);
+    },
+
+    cancelRegistration: async (eventId, memberId) => {
+        return await axiosInstance.delete(`/events/${eventId}/cancel/${memberId}`);
+    },
+
 };
 
 export default eventApi;

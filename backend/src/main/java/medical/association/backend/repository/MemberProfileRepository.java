@@ -6,8 +6,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface MemberProfileRepository extends JpaRepository<MemberProfile, Long> {
     List<MemberProfile> findByStatus (MembershipStatus status);
+    Optional<MemberProfile> findByUserId(Long userId);
+
 }

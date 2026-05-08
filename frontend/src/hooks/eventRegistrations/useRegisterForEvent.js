@@ -1,6 +1,7 @@
 import { useState } from "react";
 import eventApi from "../../api/eventApi.js";
 
+
 const useRegisterForEvent = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -22,7 +23,21 @@ const useRegisterForEvent = () => {
         }
     };
 
-    return { register, loading, error, success };
+    const cancel = async (eventId, memberId) => {
+        setLoading(true);
+        setError(null);
+        try {
+            await eventApi.cancelRegistration(eventId, memberId);
+            setSuccess(false);
+        } catch (err) {
+            setError(err.response?.data?.message || "Error cancelling registration.");
+            throw err;
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return { register, cancel, loading, error, success };
 };
 
 export default useRegisterForEvent;

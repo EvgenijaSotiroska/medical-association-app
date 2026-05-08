@@ -4,6 +4,7 @@ import medical.association.backend.enumeration.EventType;
 import medical.association.backend.model.domain.Event;
 import medical.association.backend.model.dto.CreateEventRequestDto;
 import medical.association.backend.model.dto.EventResponseDto;
+import medical.association.backend.model.exception.EventNotFoundException;
 import medical.association.backend.repository.EventRepository;
 import medical.association.backend.service.EventService;
 import org.springframework.stereotype.Service;
@@ -37,7 +38,7 @@ public class EventServiceImpl implements EventService {
     @Override
     public EventResponseDto findById(Long id) {
         Event event = eventRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Event not found"));
+                .orElseThrow(() -> new EventNotFoundException(id));
         return EventResponseDto.from(event);
     }
 
@@ -62,7 +63,7 @@ public class EventServiceImpl implements EventService {
     @Override
     public EventResponseDto update(Long id, CreateEventRequestDto request) {
         Event event = eventRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Event not found"));
+                .orElseThrow(() -> new EventNotFoundException(id));
         event.setTitle(request.title());
         event.setDescription(request.description());
         event.setEventDate(request.eventDate());

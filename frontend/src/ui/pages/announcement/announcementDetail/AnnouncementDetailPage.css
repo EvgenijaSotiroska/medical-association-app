@@ -21,30 +21,56 @@
     position: relative;
 }
 
-/* Image */
+.detail-close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(255,255,255,0.9);
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    transition: background 0.2s;
+}
+
+.detail-close-btn:hover {
+    background: #f3f4f6;
+}
+
 .detail-img {
     width: 100%;
-    height: 350px;
+    height: 300px;
     object-fit: cover;
 }
 
 .detail-img-placeholder {
     width: 100%;
-    height: 350px;
-    background: #e5e7eb;
+    height: 300px;
+    background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);
 }
 
-/* Body */
 .detail-body {
     padding: 2rem;
 }
 
-/* Meta */
+.detail-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
 .detail-meta {
     display: flex;
     align-items: center;
     gap: 1rem;
-    margin-bottom: 1rem;
 }
 
 .detail-type {
@@ -66,7 +92,50 @@
     color: #6b7280;
 }
 
-/* Title */
+.detail-admin-actions {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.detail-edit-btn {
+    background: #fff;
+    color: #2563eb;
+    border: 1.5px solid #2563eb;
+    padding: 0.4rem 1rem;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.detail-edit-btn:hover {
+    background: #2563eb;
+    color: #fff;
+}
+
+.detail-delete-btn {
+    background: #fff;
+    color: #dc2626;
+    border: 1.5px solid #dc2626;
+    padding: 0.4rem 1rem;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.detail-delete-btn:hover {
+    background: #dc2626;
+    color: #fff;
+}
+
+.detail-delete-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 .detail-title {
     font-size: 1.75rem;
     font-weight: 700;
@@ -87,7 +156,6 @@
     margin-bottom: 1.25rem;
 }
 
-/* Description */
 .detail-desc {
     font-size: 1rem;
     color: #374151;
@@ -95,7 +163,6 @@
     margin-bottom: 2rem;
 }
 
-/* Register */
 .detail-register {
     border-top: 1px solid #f3f4f6;
     padding-top: 1.5rem;
@@ -122,6 +189,17 @@
     cursor: not-allowed;
 }
 
+.detail-register__btn--cancel {
+    background: #fff;
+    color: #dc2626;
+    border: 1.5px solid #dc2626;
+}
+
+.detail-register__btn--cancel:hover {
+    background: #dc2626;
+    color: #fff;
+}
+
 .detail-register__success {
     color: #065f46;
     font-weight: 600;
@@ -134,97 +212,123 @@
     margin-top: 0.5rem;
 }
 
-/* Empty/Error */
+.detail-confirm {
+    background: #f8fafc;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.25rem;
+}
+
+.detail-confirm p {
+    font-size: 0.95rem;
+    color: #374151;
+    margin: 0 0 1rem;
+    line-height: 1.5;
+}
+
+.detail-confirm__actions {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.detail-confirm__btn {
+    padding: 0.5rem 1.25rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+}
+
+.detail-confirm__btn--yes {
+    background: #1e3a5f;
+    color: #fff;
+}
+
+.detail-confirm__btn--yes:hover {
+    background: #2563eb;
+}
+
+.detail-confirm__btn--no {
+    background: #fff;
+    color: #6b7280;
+    border: 1.5px solid #e5e7eb;
+}
+
+.detail-confirm__btn--no:hover {
+    background: #f3f4f6;
+}
+
 .detail-empty {
     text-align: center;
     color: #9ca3af;
     padding: 4rem 0;
     font-size: 1rem;
 }
-.detail-header-row {
+
+.detail-registrations {
+    margin-top: 2rem;
+    border-top: 1px solid #f3f4f6;
+    padding-top: 1.5rem;
+}
+
+.detail-registrations__header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 1rem;
 }
 
-.detail-delete-btn {
-    background: #fff;
-    color: #dc2626;
-    border: 1.5px solid #dc2626;
-    padding: 0.4rem 1rem;
-    border-radius: 8px;
-    font-size: 0.88rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.detail-delete-btn:hover {
-    background: #dc2626;
-    color: #fff;
-}
-
-.detail-delete-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-.detail-admin-actions {
-    display: flex;
-    gap: 0.75rem;
-}
-
-.detail-edit-btn {
-    background: #fff;
-    color: #2563eb;
-    border: 1.5px solid #2563eb;
-    padding: 0.4rem 1rem;
-    border-radius: 8px;
-    font-size: 0.88rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.detail-edit-btn:hover {
-    background: #2563eb;
-    color: #fff;
-}
-.detail-back-btn {
-    background: none;
-    border: none;
-    color: #2563eb;
+.detail-registrations__count {
     font-size: 0.95rem;
     font-weight: 600;
-    cursor: pointer;
-    padding: 0;
-    margin-bottom: 1.5rem;
-    display: inline-block;
-    transition: color 0.2s;
+    color: #374151;
 }
 
-.detail-back-btn:hover {
-    color: #1e3a5f;
-}
-.detail-close-btn {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background: rgba(255,255,255,0.9);
+.detail-registrations__toggle {
+    background: #1e3a5f;
+    color: #fff;
     border: none;
-    border-radius: 50%;
-    width: 36px;
-    height: 36px;
-    font-size: 1rem;
+    padding: 0.4rem 1rem;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-weight: 600;
     cursor: pointer;
-    z-index: 10;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
     transition: background 0.2s;
 }
 
-.detail-close-btn:hover {
-    background: #f3f4f6;
+.detail-registrations__toggle:hover {
+    background: #2563eb;
+}
+
+.detail-registrations__table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.detail-registrations__table th {
+    text-align: left;
+    padding: 0.6rem 0.75rem;
+    background: #f8fafc;
+    color: #6b7280;
+    font-weight: 600;
+    border-bottom: 1.5px solid #e5e7eb;
+}
+
+.detail-registrations__table td {
+    padding: 0.6rem 0.75rem;
+    border-bottom: 1px solid #f3f4f6;
+    color: #374151;
+}
+
+.detail-registrations__table tr:hover td {
+    background: #f8fafc;
+}
+
+.detail-registrations__empty {
+    text-align: center;
+    color: #9ca3af;
+    padding: 1.5rem 0;
 }

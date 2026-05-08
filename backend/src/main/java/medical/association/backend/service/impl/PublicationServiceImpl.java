@@ -4,6 +4,7 @@ import medical.association.backend.enumeration.PublicationType;
 import medical.association.backend.model.domain.Publication;
 import medical.association.backend.model.dto.CreatePublicationRequestDto;
 import medical.association.backend.model.dto.PublicationResponseDto;
+import medical.association.backend.model.exception.PublicationNotFoundException;
 import medical.association.backend.repository.PublicationRepository;
 import medical.association.backend.service.PublicationService;
 import org.springframework.stereotype.Service;
@@ -37,7 +38,7 @@ public class PublicationServiceImpl implements PublicationService {
     @Override
     public PublicationResponseDto findById(Long id) {
         Publication publication = publicationRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Publication not found"));
+                .orElseThrow(() -> new PublicationNotFoundException(id));
         return PublicationResponseDto.from(publication);
     }
 
@@ -60,7 +61,7 @@ public class PublicationServiceImpl implements PublicationService {
     @Override
     public PublicationResponseDto update(Long id, CreatePublicationRequestDto request) {
         Publication publication = publicationRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Publication not found"));
+                .orElseThrow(() -> new PublicationNotFoundException(id));
         publication.setTitle(request.title());
         publication.setDescription(request.description());
         publication.setImageUrl(request.imageUrl());

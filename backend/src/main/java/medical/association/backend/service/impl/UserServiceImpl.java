@@ -65,19 +65,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<LoginUserResponseDto> login(LoginUserRequestDto loginUserRequestDto) {
-       User user = userRepository.findByUsername(loginUserRequestDto.username())
-               .orElseThrow(() -> new UserNotFoundException(loginUserRequestDto.username()));
+        User user = userRepository.findByUsername(loginUserRequestDto.username())
+                .orElseThrow(() -> new UserNotFoundException(loginUserRequestDto.username()));
 
-       if(!user.isEnabled()){
-           throw new AccountNotApprovedException();
-       }
+        if(!user.isEnabled()){
+            throw new AccountNotApprovedException();
+        }
 
-       if(!passwordEncoder.matches(loginUserRequestDto.password(), user.getPassword()))
-           throw new IncorrectPasswordException();
+        if(!passwordEncoder.matches(loginUserRequestDto.password(), user.getPassword()))
+            throw new IncorrectPasswordException();
 
-       String token = jwtHelper.generateToken(user);
+        String token = jwtHelper.generateToken(user);
 
-       return Optional.of(new LoginUserResponseDto(token));
+        return Optional.of(new LoginUserResponseDto(token, user.getId(), user.getRole().name()));
     }
 
     @Override

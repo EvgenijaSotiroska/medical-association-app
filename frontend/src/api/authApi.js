@@ -13,11 +13,13 @@ const authApi = {
             password,
         });
 
-        const token = response.data.token;
+        const { token, id, role } = response.data;
 
         localStorage.setItem("token", token);
+        localStorage.setItem("memberId", id);
+        localStorage.setItem("role", role);
 
-        return token;
+        return response.data;
     }
 };
 
