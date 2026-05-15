@@ -1,6 +1,7 @@
 import {useState} from "react";
 import {Link, useNavigate, useLocation} from "react-router";
 import './Header.css';
+import { jwtDecode } from "jwt-decode";
 import {getUserRole} from "../../../../utils/auth.js";
 
 export default function Header() {
@@ -9,13 +10,32 @@ export default function Header() {
     const location = useLocation();
 
     const token = localStorage.getItem("token");
-    const isAuthenticated = !!token;
+
+    let isAuthenticated = false;
+
+    if (token) {
+        try {
+            const decoded = jwtDecode(token);
+
+            const currentTime = Date.now() / 1000;
+
+            if (decoded.exp > currentTime) {
+                isAuthenticated = true;
+            } else {
+                localStorage.removeItem("token");
+            }
+        } catch (e) {
+            localStorage.removeItem("token");
+        }
+    }
     const role = getUserRole();
 
     const isAdmin = role === "ROLE_ADMINISTRATOR";
 
     const handleLogout = () => {
         localStorage.removeItem("token");
+        localStorage.removeItem("memberId");
+        localStorage.removeItem("role");
         navigate("/");
     };
 
@@ -89,6 +109,12 @@ export default function Header() {
                     <>
                         <Link to="/announcements" className={isActive("/announcements")}
                               onClick={() => setMenuOpen(false)}>Соопштенија</Link>
+                    </>
+                )}
+                {isAuthenticated && isAdmin && (
+                    <>
+                        <Link to="/announcements" className={isActive("/announcements")}
+                              onClick={() => setMenuOpen(false)}>Соопштенија</Link>
                         <Link to="/create-event" className={isActive("/create-event")}
                               onClick={() => setMenuOpen(false)}>Креирај настан</Link>
                         <Link to="/create-publication" className={isActive("/create-publication")}
@@ -110,7 +136,7 @@ export default function Header() {
                         Одјави се
                     </button>
                 ) : (
-                    <Link to="/" className="btn-primary" onClick={() => setMenuOpen(false)}>
+                    <Link to="/login" className="btn-primary" onClick={() => setMenuOpen(false)}>
                         Најава
                     </Link>
                 )}
