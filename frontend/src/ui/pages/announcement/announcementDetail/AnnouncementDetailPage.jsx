@@ -287,13 +287,21 @@ export default function AnnouncementDetailPage() {
                                 <span className="detail-registrations__count">
                                     👥 Пријавени членови: {showRegistrations ? registrations.length : registrationsCount}
                                 </span>
-                                <button
-                                    className="detail-registrations__toggle"
-                                    onClick={fetchRegistrations}
-                                    disabled={loadingRegistrations}
-                                >
-                                    {loadingRegistrations ? "Се вчитува..." : showRegistrations ? "Затвори" : "▼ Прикажи"}
-                                </button>
+                                <div style={{ display: "flex", gap: "8px" }}>
+                                    <button
+                                        className="detail-registrations__toggle"
+                                        onClick={fetchRegistrations}
+                                        disabled={loadingRegistrations}
+                                    >
+                                        {loadingRegistrations ? "Се вчитува..." : showRegistrations ? "Затвори" : "▼ Прикажи"}
+                                    </button>
+                                    <button
+                                        className="detail-registrations__toggle"
+                                        onClick={() => eventApi.exportRegistrations(id)}
+                                    >
+                                        ⬇ Преземи CSV
+                                    </button>
+                                </div>
                             </div>
 
                             {showRegistrations && (

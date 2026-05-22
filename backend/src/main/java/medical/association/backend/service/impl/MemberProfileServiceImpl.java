@@ -5,6 +5,7 @@ import medical.association.backend.model.domain.MemberProfile;
 import medical.association.backend.model.dto.ApprovedMemberDto;
 import medical.association.backend.model.dto.MemberProfileDisplayDto;
 import medical.association.backend.repository.MemberProfileRepository;
+import medical.association.backend.service.EmailService;
 import medical.association.backend.service.MemberProfileService;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +15,11 @@ import java.util.Optional;
 @Service
 public class MemberProfileServiceImpl implements MemberProfileService {
     private final MemberProfileRepository memberProfileRepository;
+    private final EmailService emailService;
 
-    public MemberProfileServiceImpl(MemberProfileRepository memberProfileRepository) {
+    public MemberProfileServiceImpl(MemberProfileRepository memberProfileRepository, EmailService emailService) {
         this.memberProfileRepository = memberProfileRepository;
+        this.emailService = emailService;
     }
 
     @Override
@@ -62,7 +65,15 @@ public class MemberProfileServiceImpl implements MemberProfileService {
                         profile.getUser().setEnabled(true);
                     }
 
-                    return memberProfileRepository.save(profile);
+                    MemberProfile saved = memberProfileRepository.save(profile);
+
+                    emailService.sendStatusEmail(
+                            saved.getUser().getEmail(),
+                            saved.getFirstName(),
+                            newStatus
+                    );
+
+                    return saved;
                 });
     }
 

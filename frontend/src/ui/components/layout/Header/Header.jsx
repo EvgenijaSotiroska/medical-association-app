@@ -36,7 +36,7 @@ export default function Header() {
         localStorage.removeItem("token");
         localStorage.removeItem("memberId");
         localStorage.removeItem("role");
-        navigate("/");
+        navigate("/login");
     };
 
     const isActive = (path) => location.pathname === path ? "nav-link--active" : "";

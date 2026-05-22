@@ -6,16 +6,18 @@ import {useLogin} from "../../../hooks/auth/useLogin.js";
 export default function LoginPage() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const { login, loading, error } = useLogin();
+    const [localError, setLocalError] = useState(null);
+    const { login, loading } = useLogin();
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLocalError(null);
         try {
             await login(username, password);
             navigate("/");
-        } catch (_) {
-            // error handled by hook
+        } catch (err) {
+            setLocalError(err.response?.data?.message || "Погрешно корисничко име или лозинка");
         }
     };
 
@@ -58,7 +60,7 @@ export default function LoginPage() {
                         />
                     </div>
 
-                    {error && <p className="auth-error">{error}</p>}
+                    {localError && <p className="auth-error">{localError}</p>}
 
                     <button
                         className="auth-btn"

@@ -2,8 +2,12 @@ package medical.association.backend.web.controller;
 
 import medical.association.backend.model.dto.EventRegistrationResponseDto;
 import medical.association.backend.service.EventRegistrationService;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @RestController
@@ -42,5 +46,27 @@ public class EventRegistrationController {
             @PathVariable Long memberId) {
         eventRegistrationService.cancelRegistration(eventId, memberId);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{eventId}/registrations/export")
+    public ResponseEntity<byte[]> exportRegistrations(@PathVariable Long eventId) {
+        List<EventRegistrationResponseDto> registrations = eventRegistrationService.findByEventId(eventId);
+
+        StringBuilder csv = new StringBuilder();
+        csv.append("Name,Surname,Username\n");
+
+        for (EventRegistrationResponseDto r : registrations) {
+            csv.append(r.firstName()).append(",")
+                    .append(r.lastName()).append(",")
+                    .append(r.memberUsername()).append(",")
+                    .append("\n");
+        }
+
+        byte[] bytes = csv.toString().getBytes(StandardCharsets.UTF_8);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=registrations-" + eventId + ".csv")
+                .contentType(MediaType.parseMediaType("text/csv"))
+                .body(bytes);
     }
 }
