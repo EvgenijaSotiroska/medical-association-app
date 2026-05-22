@@ -2,6 +2,8 @@ import {Link} from "react-router";
 import "./HomePage.css";
 
 export default function HomePage() {
+    const isAuthenticated = !!localStorage.getItem("token");
+
     return (
         <div className="home-page">
 
@@ -22,8 +24,13 @@ export default function HomePage() {
                     </p>
 
                     <div className="home-hero__actions">
-                        <Link to="/register" className="btn primary">Стани член</Link>
-
+                        {!isAuthenticated ? (
+                            <Link to="/register" className="btn primary">
+                                Стани член
+                            </Link>
+                        ) : (
+                            <p className="home-welcome">Добредојде!</p>
+                        )}
                     </div>
                 </div>
 
@@ -57,7 +64,8 @@ export default function HomePage() {
                 </div>
             </section>
 
-            <section className="home-page__section">
+            {!isAuthenticated && (
+                <section className="home-page__section">
                 <div className="home-cta">
 
                     <h2>Членство</h2>
@@ -70,6 +78,7 @@ export default function HomePage() {
                     </Link>
                 </div>
             </section>
+            )}
 
             <footer className="home-footer">
 
@@ -86,18 +95,40 @@ export default function HomePage() {
                     <div className="home-footer__col">
                         <h4>Брзи линкови</h4>
                         <ul>
-                            <li>За здружението</li>
-                            <li>Соопштенија</li>
-                            <li>Зачленување</li>
-                            <li>Настани</li>
-                            <li>Контакт</li>
+                            <li>
+                                <Link to="/">За здружението</Link>
+                            </li>
+
+                            {isAuthenticated && (
+                                <>
+                                    <li>
+                                        <Link to="/announcements">
+                                            Соопштенија
+                                        </Link>
+                                    </li>
+
+                                    <li>
+                                        <Link to="/announcements">
+                                            Настани
+                                        </Link>
+                                    </li>
+                                </>
+                            )}
+
+                            {!isAuthenticated && (
+                                <li>
+                                    <Link to="/register">
+                                        Зачленување
+                                    </Link>
+                                </li>
+                            )}
                         </ul>
                     </div>
 
                     <div className="home-footer__col">
                         <h4>Контакт</h4>
                         <p>ул. Водњанска 17, 1000 Скопје</p>
-                        <p>info@zdrintmkd.org</p>
+                        <p>medicalassociationgroup@gmail.com</p>
                         <p>+389 2 312 3456</p>
                     </div>
 
