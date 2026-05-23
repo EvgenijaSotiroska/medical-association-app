@@ -75,6 +75,7 @@ public class JwtWebSecurityConfig {
                                         "/api/user/register",
                                         "/api/user/login"
 
+
                                 )
                                 .permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/publications/**")
@@ -103,6 +104,8 @@ public class JwtWebSecurityConfig {
                                 .hasRole("ADMINISTRATOR")
                                 .requestMatchers("/api/memberProfiles/**")
                                 .hasRole("ADMINISTRATOR")
+                                .requestMatchers("/api/profile/**")
+                                .authenticated()
                                 .anyRequest()
                                 .authenticated()
                 )

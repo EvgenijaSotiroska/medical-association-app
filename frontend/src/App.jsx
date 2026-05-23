@@ -12,6 +12,9 @@ import EditAnnouncementPage from "./ui/pages/announcement/editAnnouncement/EditA
 import ProtectedRoute from "./ui/pages/auth/ProtectedRoute.jsx";
 import HomePage from "./ui/pages/home/HomePage.jsx";
 import ApprovedMembersPage from "./ui/pages/memberProfile/ApprovedMembersPage.jsx";
+import ProfilePage from "./ui/pages/profile/ProfilePage.jsx";
+
+
 function App() {
     return (
         <BrowserRouter>
@@ -44,6 +47,7 @@ function App() {
                         <ProtectedRoute requiredRole="ROLE_ADMINISTRATOR">
                             <EditAnnouncementPage />
                         </ProtectedRoute>} />
+                    <Route path='profile' element={<ProfilePage/>}/>
                 </Route>
             </Routes>
         </BrowserRouter>

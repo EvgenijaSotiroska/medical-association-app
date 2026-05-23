@@ -16,9 +16,7 @@ export default function Header() {
     if (token) {
         try {
             const decoded = jwtDecode(token);
-
             const currentTime = Date.now() / 1000;
-
             if (decoded.exp > currentTime) {
                 isAuthenticated = true;
             } else {
@@ -28,8 +26,8 @@ export default function Header() {
             localStorage.removeItem("token");
         }
     }
-    const role = getUserRole();
 
+    const role = getUserRole();
     const isAdmin = role === "ROLE_ADMINISTRATOR";
 
     const handleLogout = () => {
@@ -51,31 +49,20 @@ export default function Header() {
                 <nav className="nav-links">
                     <Link to="/" className={isActive("/")}>Почетна</Link>
                     {!isAuthenticated && (
-                        <>
-                            <Link to="/register" className={isActive("/register")}>Членство</Link>
-                        </>
+                        <Link to="/register" className={isActive("/register")}>Членство</Link>
                     )}
                     {isAuthenticated && isAdmin && (
                         <>
-                            <Link to="/create-event" className={isActive("/create-event")}>
-                                Креирај настан
-                            </Link>
-
-                            <Link to="/create-publication" className={isActive("/create-publication")}>
-                                Креирај објава
-                            </Link>
-
-                            <Link to="/memberRequests" className={isActive("/memberRequests")}>
-                                Барања за членство
-                            </Link>
-                            <Link to="/approvedMembers" className={isActive("/approvedMembers")}>
-                                Одобрени членови
-                            </Link>
+                            <Link to="/create-event" className={isActive("/create-event")}>Креирај настан</Link>
+                            <Link to="/create-publication" className={isActive("/create-publication")}>Креирај објава</Link>
+                            <Link to="/memberRequests" className={isActive("/memberRequests")}>Барања за членство</Link>
+                            <Link to="/approvedMembers" className={isActive("/approvedMembers")}>Одобрени членови</Link>
                         </>
                     )}
                     {isAuthenticated && (
                         <>
                             <Link to="/announcements" className={isActive("/announcements")}>Соопштенија</Link>
+                            <Link to="/profile" className={isActive("/profile")}>Мој профил</Link>
                         </>
                     )}
                 </nav>
@@ -103,35 +90,27 @@ export default function Header() {
 
             <nav className={`nav-mobile-drawer ${menuOpen ? "open" : ""}`}>
                 <Link to="/" className={isActive("/")} onClick={() => setMenuOpen(false)}>Почетна</Link>
-                <Link to="/register" className={isActive("/register")}
-                      onClick={() => setMenuOpen(false)}>Членство</Link>
-                {isAuthenticated && (
-                    <>
-                        <Link to="/announcements" className={isActive("/announcements")}
-                              onClick={() => setMenuOpen(false)}>Соопштенија</Link>
-                    </>
+                {!isAuthenticated && (
+                    <Link to="/register" className={isActive("/register")} onClick={() => setMenuOpen(false)}>Членство</Link>
                 )}
                 {isAuthenticated && isAdmin && (
                     <>
-                        <Link to="/announcements" className={isActive("/announcements")}
-                              onClick={() => setMenuOpen(false)}>Соопштенија</Link>
-                        <Link to="/create-event" className={isActive("/create-event")}
-                              onClick={() => setMenuOpen(false)}>Креирај настан</Link>
-                        <Link to="/create-publication" className={isActive("/create-publication")}
-                              onClick={() => setMenuOpen(false)}>Креирај објава</Link>
-                        <Link to="/memberRequests" className={isActive("/memberRequests")}
-                              onClick={() => setMenuOpen(false)}>Барања за членство</Link>
-                        <Link to="/approvedMembers" className={isActive("/approvedMembers")}
-                              onClick={() => setMenuOpen(false)}>Одобрени членови</Link>
+                        <Link to="/create-event" className={isActive("/create-event")} onClick={() => setMenuOpen(false)}>Креирај настан</Link>
+                        <Link to="/create-publication" className={isActive("/create-publication")} onClick={() => setMenuOpen(false)}>Креирај објава</Link>
+                        <Link to="/memberRequests" className={isActive("/memberRequests")} onClick={() => setMenuOpen(false)}>Барања за членство</Link>
+                        <Link to="/approvedMembers" className={isActive("/approvedMembers")} onClick={() => setMenuOpen(false)}>Одобрени членови</Link>
+                    </>
+                )}
+                {isAuthenticated && (
+                    <>
+                        <Link to="/announcements" className={isActive("/announcements")} onClick={() => setMenuOpen(false)}>Соопштенија</Link>
+                        <Link to="/profile" className={isActive("/profile")} onClick={() => setMenuOpen(false)}>Мој профил</Link>
                     </>
                 )}
                 {isAuthenticated ? (
                     <button
                         className="btn-primary"
-                        onClick={() => {
-                            handleLogout();
-                            setMenuOpen(false);
-                        }}
+                        onClick={() => { handleLogout(); setMenuOpen(false); }}
                     >
                         Одјави се
                     </button>

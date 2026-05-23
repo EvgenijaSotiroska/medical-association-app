@@ -20,8 +20,9 @@ axiosInstance.interceptors.response.use(
     (response) => response,
     (error) => {
         const isLoginRequest = error.config?.url?.includes("/user/login");
+        const isPasswordChange = error.config?.url?.includes("/profile/password");
 
-        if (error.response?.status === 401 && !isLoginRequest) {
+        if (error.response?.status === 401 && !isLoginRequest && !isPasswordChange) {
             localStorage.removeItem('token');
             window.location.href = '/login';
         }
