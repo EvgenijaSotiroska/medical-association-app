@@ -13,6 +13,9 @@ import ProtectedRoute from "./ui/pages/auth/ProtectedRoute.jsx";
 import HomePage from "./ui/pages/home/HomePage.jsx";
 import ApprovedMembersPage from "./ui/pages/memberProfile/ApprovedMembersPage.jsx";
 import ProfilePage from "./ui/pages/profile/ProfilePage.jsx";
+import MyEventsPage from "./ui/pages/myEvents/MyEventsPage.jsx";
+
+
 
 
 function App() {
@@ -48,6 +51,7 @@ function App() {
                             <EditAnnouncementPage />
                         </ProtectedRoute>} />
                     <Route path='profile' element={<ProfilePage/>}/>
+                    <Route path='my-events' element={<MyEventsPage/>}/>
                 </Route>
             </Routes>
         </BrowserRouter>

@@ -77,4 +77,16 @@ public class EventRegistrationServiceImpl implements EventRegistrationService {
                 .orElseThrow(RegistrationNotFoundException::new);
         eventRegistrationRepository.delete(registration);
     }
+    @Override
+    public List<EventRegistrationResponseDto> findByMemberId(Long memberId) {
+        return eventRegistrationRepository.findByMemberId(memberId)
+                .stream()
+                .map(reg -> {
+                    MemberProfile profile = memberProfileRepository
+                            .findByUserId(reg.getMember().getId())
+                            .orElse(null);
+                    return EventRegistrationResponseDto.from(reg, profile);
+                })
+                .toList();
+    }
 }

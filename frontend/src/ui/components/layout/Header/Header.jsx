@@ -62,6 +62,7 @@ export default function Header() {
                     {isAuthenticated && (
                         <>
                             <Link to="/announcements" className={isActive("/announcements")}>Соопштенија</Link>
+                            <Link to="/my-events" className={isActive("/my-events")}>Мои настани</Link>
                             <Link to="/profile" className={isActive("/profile")}>Мој профил</Link>
                         </>
                     )}
@@ -104,6 +105,7 @@ export default function Header() {
                 {isAuthenticated && (
                     <>
                         <Link to="/announcements" className={isActive("/announcements")} onClick={() => setMenuOpen(false)}>Соопштенија</Link>
+                        <Link to="/my-events" className={isActive("/my-events")} onClick={() => setMenuOpen(false)}>Мои настани</Link>
                         <Link to="/profile" className={isActive("/profile")} onClick={() => setMenuOpen(false)}>Мој профил</Link>
                     </>
                 )}

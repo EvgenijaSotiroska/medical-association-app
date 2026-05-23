@@ -78,6 +78,8 @@ public class JwtWebSecurityConfig {
 
                                 )
                                 .permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/events/my-events/*")
+                                .authenticated()
                                 .requestMatchers(HttpMethod.GET, "/api/publications/**")
                                 .authenticated()
                                 .requestMatchers(HttpMethod.POST, "/api/publications")

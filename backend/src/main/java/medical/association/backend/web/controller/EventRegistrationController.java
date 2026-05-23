@@ -69,4 +69,9 @@ public class EventRegistrationController {
                 .contentType(MediaType.parseMediaType("text/csv"))
                 .body(bytes);
     }
+    @GetMapping("/my-events/{memberId}")
+    public ResponseEntity<List<EventRegistrationResponseDto>> findMyRegistrations(
+            @PathVariable Long memberId) {
+        return ResponseEntity.ok(eventRegistrationService.findByMemberId(memberId));
+    }
 }

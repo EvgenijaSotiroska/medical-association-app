@@ -34,6 +34,9 @@ const eventApi = {
     isRegistered: async (eventId, memberId) => {
         return await axiosInstance.get(`/events/${eventId}/is-registered/${memberId}`);
     },
+    getMyRegistrations: async (memberId) => {
+        return await axiosInstance.get(`/events/my-events/${memberId}`);
+    },
 
     cancelRegistration: async (eventId, memberId) => {
         return await axiosInstance.delete(`/events/${eventId}/cancel/${memberId}`);

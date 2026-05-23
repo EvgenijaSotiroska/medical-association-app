@@ -9,6 +9,7 @@ public interface EventRegistrationService {
 
     boolean isRegistered(Long eventId, Long memberId);
     void cancelRegistration(Long eventId, Long memberId);
+    List<EventRegistrationResponseDto> findByMemberId(Long memberId);
 
 
 }
