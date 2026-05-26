@@ -48,6 +48,7 @@ public class PublicationServiceImpl implements PublicationService {
                 request.title(),
                 request.description(),
                 request.imageUrl(),
+                request.documentUrl(),
                 request.type(),
                 null
         );

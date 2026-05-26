@@ -180,6 +180,11 @@ export default function AnnouncementDetailPage() {
                                 </span>
                             )}
                         </div>
+                        {item.documentUrl && (
+                            <a href={item.documentUrl} target="_blank" rel="noreferrer" className="ann-card__doc-link">
+                                📄 Отвори документ
+                            </a>
+                        )}
 
                         {isAdmin && (
                             <div className="detail-admin-actions">

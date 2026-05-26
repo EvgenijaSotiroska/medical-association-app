@@ -6,5 +6,6 @@ public record CreatePublicationRequestDto(
         String title,
         String description,
         String imageUrl,
+        String documentUrl,
         PublicationType type
 ) {}

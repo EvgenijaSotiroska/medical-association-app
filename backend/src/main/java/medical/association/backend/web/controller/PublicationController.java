@@ -4,8 +4,12 @@ import medical.association.backend.enumeration.PublicationType;
 import medical.association.backend.model.dto.CreatePublicationRequestDto;
 import medical.association.backend.model.dto.PublicationResponseDto;
 import medical.association.backend.service.PublicationService;
+import medical.association.backend.service.impl.SupabaseStorageServiceImpl;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.List;
 
 @RestController
@@ -13,9 +17,11 @@ import java.util.List;
 public class PublicationController {
 
     private final PublicationService publicationService;
+    private final SupabaseStorageServiceImpl supabaseStorageService;
 
-    public PublicationController(PublicationService publicationService) {
+    public PublicationController(PublicationService publicationService, SupabaseStorageServiceImpl supabaseStorageService) {
         this.publicationService = publicationService;
+        this.supabaseStorageService = supabaseStorageService;
     }
 
     @GetMapping
@@ -32,10 +38,34 @@ public class PublicationController {
         return ResponseEntity.ok(publicationService.findById(id));
     }
 
-    @PostMapping
-    public ResponseEntity<PublicationResponseDto> create(@RequestBody CreatePublicationRequestDto request) {
-        return ResponseEntity.ok(publicationService.create(request));
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<PublicationResponseDto> create(
+            @RequestParam("title") String title,
+            @RequestParam("description") String description,
+            @RequestParam(value = "imageUrl", required = false) String imageUrl,
+            @RequestParam("type") PublicationType type,
+            @RequestParam(value = "document", required = false) MultipartFile document
+    ) {
+        try {
+
+            String documentUrl = null;
+            if (document != null && !document.isEmpty()) {
+                String key = supabaseStorageService.upload(document);
+                documentUrl = supabaseStorageService.getPublicUrl(key);
+            }
+
+            CreatePublicationRequestDto request = new CreatePublicationRequestDto(
+                    title, description, imageUrl, documentUrl, type
+            );
+
+            PublicationResponseDto result = publicationService.create(request);
+            return ResponseEntity.ok(result);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(500).build();
+        }
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         publicationService.delete(id);

@@ -13,8 +13,13 @@ const publicationApi = {
         return await axiosInstance.get(`/publications/${id}`);
     },
 
-    create: async (data) => {
-        return await axiosInstance.post('/publications', data);
+    create: async (formData) => {
+        return await axiosInstance.post('/publications', formData, {
+            transformRequest: (data, headers) => {
+                delete headers["Content-Type"];
+                return data;
+            }
+        });
     },
     delete: async (id) => {
         return await axiosInstance.delete(`/publications/${id}`);

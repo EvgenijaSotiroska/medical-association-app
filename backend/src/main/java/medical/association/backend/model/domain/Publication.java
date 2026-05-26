@@ -26,15 +26,19 @@ public class Publication extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private PublicationType type;
 
+    @Column(length = 2048)
+    private String documentUrl;
+
     @ManyToOne
     @JoinColumn(name = "author_id")
     private User author;
 
     public Publication(String title, String description,
-                       String imageUrl, PublicationType type, User author) {
+                       String imageUrl, String documentUrl, PublicationType type, User author) {
         this.title = title;
         this.description = description;
         this.imageUrl = imageUrl;
+        this.documentUrl = documentUrl;
         this.type = type;
         this.author = author;
         this.createdAt = LocalDateTime.now();

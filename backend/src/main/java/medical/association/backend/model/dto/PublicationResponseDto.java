@@ -9,6 +9,7 @@ public record PublicationResponseDto(
         String title,
         String description,
         String imageUrl,
+        String documentUrl,
         PublicationType type,
         String authorName,
         LocalDateTime createdAt
@@ -19,6 +20,7 @@ public record PublicationResponseDto(
                 publication.getTitle(),
                 publication.getDescription(),
                 publication.getImageUrl(),
+                publication.getDocumentUrl(),
                 publication.getType(),
                 publication.getAuthor() != null ? publication.getAuthor().getUsername() : null,
                 publication.getCreatedAt()

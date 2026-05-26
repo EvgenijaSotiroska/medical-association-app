@@ -74,8 +74,6 @@ public class JwtWebSecurityConfig {
                                         "/v3/api-docs/**",
                                         "/api/user/register",
                                         "/api/user/login"
-
-
                                 )
                                 .permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/events/my-events/*")

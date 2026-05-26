@@ -10,7 +10,7 @@ export default function CreatePublicationPage() {
         imageUrl: "",
         type: "NEWS"
     });
-
+    const [documentFile, setDocumentFile] = useState(null);
     const { createPublication, loading, error, success } = useCreatePublication();
     const navigate = useNavigate();
 
@@ -21,15 +21,24 @@ export default function CreatePublicationPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        const formData = new FormData();
+        formData.append("title", form.title);
+        formData.append("description", form.description);
+        formData.append("type", form.type);
+        if (form.type === "NEWS" && form.imageUrl) {
+            formData.append("imageUrl", form.imageUrl);
+        }
+        if (form.type === "DOCUMENT" && documentFile) {
+            formData.append("document", documentFile);
+        }
+
         try {
-            await createPublication(form);
+            await createPublication(formData);
         } catch (_) {}
     };
 
-    const typeLabel = {
-        NEWS: "Новост",
-        DOCUMENT: "Документ"
-    };
+    const typeLabel = { NEWS: "Новост", DOCUMENT: "Документ" };
 
     return (
         <div className="create-page">
@@ -41,20 +50,15 @@ export default function CreatePublicationPage() {
                     <div className="create-success">
                         <p>✅ Објавата е успешно креирана!</p>
                         <div className="create-success__actions">
-                            <button
-                                className="create-btn"
-                                onClick={() => navigate("/announcements")}
-                            >
+                            <button className="create-btn" onClick={() => navigate("/announcements")}>
                                 Погледај соопштенија
                             </button>
                             <button
                                 className="create-btn create-btn--outline"
-                                onClick={() => setForm({
-                                    title: "",
-                                    description: "",
-                                    imageUrl: "",
-                                    type: "NEWS"
-                                })}
+                                onClick={() => {
+                                    setForm({ title: "", description: "", imageUrl: "", type: "NEWS" });
+                                    setDocumentFile(null);
+                                }}
                             >
                                 Креирај уште една
                             </button>
@@ -104,24 +108,38 @@ export default function CreatePublicationPage() {
                             />
                         </div>
 
-                        <div className="create-field">
-                            <label className="create-label">URL на слика</label>
-                            <input
-                                name="imageUrl"
-                                className="create-input"
-                                value={form.imageUrl}
-                                onChange={handleChange}
-                                placeholder="https://..."
-                            />
-                        </div>
+                        {form.type === "NEWS" ? (
+                            <div className="create-field">
+                                <label className="create-label">URL на слика</label>
+                                <input
+                                    name="imageUrl"
+                                    className="create-input"
+                                    value={form.imageUrl}
+                                    onChange={handleChange}
+                                    placeholder="https://..."
+                                />
+                            </div>
+                        ) : (
+                            <div className="create-field">
+                                <label className="create-label">Прикачи документ (PDF)</label>
+                                <input
+                                    type="file"
+                                    accept="application/pdf"
+                                    className="create-input"
+                                    onChange={(e) => setDocumentFile(e.target.files[0])}
+                                    required
+                                />
+                                {documentFile && (
+                                    <p style={{ fontSize: "0.85rem", color: "#555", marginTop: 4 }}>
+                                        📄 {documentFile.name}
+                                    </p>
+                                )}
+                            </div>
+                        )}
 
                         {error && <p className="create-error">{error}</p>}
 
-                        <button
-                            className="create-btn"
-                            type="submit"
-                            disabled={loading}
-                        >
+                        <button className="create-btn" type="submit" disabled={loading}>
                             {loading ? "Се креира..." : "Креирај објава"}
                         </button>
                     </form>
