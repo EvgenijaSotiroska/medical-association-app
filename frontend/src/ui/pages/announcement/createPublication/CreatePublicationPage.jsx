@@ -7,9 +7,9 @@ export default function CreatePublicationPage() {
     const [form, setForm] = useState({
         title: "",
         description: "",
-        imageUrl: "",
         type: "NEWS"
     });
+    const [imageFile, setImageFile] = useState(null);
     const [documentFile, setDocumentFile] = useState(null);
     const { createPublication, loading, error, success } = useCreatePublication();
     const navigate = useNavigate();
@@ -26,8 +26,8 @@ export default function CreatePublicationPage() {
         formData.append("title", form.title);
         formData.append("description", form.description);
         formData.append("type", form.type);
-        if (form.type === "NEWS" && form.imageUrl) {
-            formData.append("imageUrl", form.imageUrl);
+        if (imageFile) {
+            formData.append("image", imageFile);
         }
         if (form.type === "DOCUMENT" && documentFile) {
             formData.append("document", documentFile);
@@ -56,7 +56,8 @@ export default function CreatePublicationPage() {
                             <button
                                 className="create-btn create-btn--outline"
                                 onClick={() => {
-                                    setForm({ title: "", description: "", imageUrl: "", type: "NEWS" });
+                                    setForm({ title: "", description: "", type: "NEWS" });
+                                    setImageFile(null);
                                     setDocumentFile(null);
                                 }}
                             >
@@ -108,23 +109,27 @@ export default function CreatePublicationPage() {
                             />
                         </div>
 
-                        {form.type === "NEWS" ? (
+                        <div className="create-field">
+                            <label className="create-label">Прикачи слика</label>
+                            <input
+                                type="file"
+                                accept="image/*"
+                                className="create-input"
+                                onChange={(e) => setImageFile(e.target.files[0])}
+                            />
+                            {imageFile && (
+                                <p style={{ fontSize: "0.85rem", color: "#555", marginTop: 4 }}>
+                                    🖼️ {imageFile.name}
+                                </p>
+                            )}
+                        </div>
+
+                        {form.type === "DOCUMENT" && (
                             <div className="create-field">
-                                <label className="create-label">URL на слика</label>
-                                <input
-                                    name="imageUrl"
-                                    className="create-input"
-                                    value={form.imageUrl}
-                                    onChange={handleChange}
-                                    placeholder="https://..."
-                                />
-                            </div>
-                        ) : (
-                            <div className="create-field">
-                                <label className="create-label">Прикачи документ (PDF)</label>
+                                <label className="create-label">Прикачи документ </label>
                                 <input
                                     type="file"
-                                    accept="application/pdf"
+                                    accept="*"
                                     className="create-input"
                                     onChange={(e) => setDocumentFile(e.target.files[0])}
                                     required

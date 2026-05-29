@@ -10,4 +10,5 @@ public interface SupabaseStorageService {
     String getPublicUrl(String key);
 
     void delete(String key);
+    String uploadImage(MultipartFile file) throws IOException;
 }

@@ -1,6 +1,6 @@
 import {Link} from "react-router";
 import "./HomePage.css";
-
+import doctorsImage from "../../../assets/doctors.png";
 export default function HomePage() {
     const isAuthenticated = !!localStorage.getItem("token");
 
@@ -36,7 +36,7 @@ export default function HomePage() {
 
                 <div className="home-hero__image">
                     <img
-                        src="https://img.freepik.com/free-photo/team-young-specialist-doctors-standing-corridor-hospital_1303-21199.jpg"
+                        src={doctorsImage}
                         alt="Doctors"
                     />
                 </div>

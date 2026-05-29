@@ -43,27 +43,27 @@ public class PublicationController {
             @RequestParam("title") String title,
             @RequestParam("description") String description,
             @RequestParam(value = "imageUrl", required = false) String imageUrl,
+            @RequestParam(value = "image", required = false) MultipartFile image,
             @RequestParam("type") PublicationType type,
             @RequestParam(value = "document", required = false) MultipartFile document
-    ) {
-        try {
-
-            String documentUrl = null;
-            if (document != null && !document.isEmpty()) {
-                String key = supabaseStorageService.upload(document);
-                documentUrl = supabaseStorageService.getPublicUrl(key);
-            }
-
-            CreatePublicationRequestDto request = new CreatePublicationRequestDto(
-                    title, description, imageUrl, documentUrl, type
-            );
-
-            PublicationResponseDto result = publicationService.create(request);
-            return ResponseEntity.ok(result);
-
-        } catch (Exception e) {
-            return ResponseEntity.status(500).build();
+    ) throws Exception {
+        String finalImageUrl = imageUrl;
+        if (image != null && !image.isEmpty()) {
+            String key = supabaseStorageService.uploadImage(image);
+            finalImageUrl = supabaseStorageService.getPublicUrl(key);
         }
+
+        String documentUrl = null;
+        if (document != null && !document.isEmpty()) {
+            String key = supabaseStorageService.upload(document);
+            documentUrl = supabaseStorageService.getPublicUrl(key);
+        }
+
+        CreatePublicationRequestDto request = new CreatePublicationRequestDto(
+                title, description, finalImageUrl, documentUrl, type
+        );
+
+        return ResponseEntity.ok(publicationService.create(request));
     }
 
     @DeleteMapping("/{id}")
@@ -72,9 +72,33 @@ public class PublicationController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<PublicationResponseDto> update(@PathVariable Long id,
-                                                         @RequestBody CreatePublicationRequestDto request) {
+    @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<PublicationResponseDto> update(
+            @PathVariable Long id,
+            @RequestParam("title") String title,
+            @RequestParam("description") String description,
+            @RequestParam(value = "imageUrl", required = false) String imageUrl,
+            @RequestParam(value = "image", required = false) MultipartFile image,
+            @RequestParam("type") PublicationType type,
+            @RequestParam(value = "document", required = false) MultipartFile document,
+            @RequestParam(value = "documentUrl", required = false) String documentUrl
+    ) throws Exception {
+        String finalImageUrl = imageUrl;
+        if (image != null && !image.isEmpty()) {
+            String key = supabaseStorageService.uploadImage(image);
+            finalImageUrl = supabaseStorageService.getPublicUrl(key);
+        }
+
+        String finalDocumentUrl = documentUrl;
+        if (document != null && !document.isEmpty()) {
+            String key = supabaseStorageService.upload(document);
+            finalDocumentUrl = supabaseStorageService.getPublicUrl(key);
+        }
+
+        CreatePublicationRequestDto request = new CreatePublicationRequestDto(
+                title, description, finalImageUrl, finalDocumentUrl, type
+        );
+
         return ResponseEntity.ok(publicationService.update(id, request));
     }
 }

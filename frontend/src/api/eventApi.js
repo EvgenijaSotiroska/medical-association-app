@@ -14,7 +14,17 @@ const eventApi = {
     },
 
     create: async (data) => {
-        return await axiosInstance.post('/events', data);
+        const formData = new FormData();
+        formData.append('title', data.title);
+        formData.append('description', data.description);
+        formData.append('eventDate', data.eventDate);
+        formData.append('location', data.location);
+        formData.append('type', data.type);
+        if (data.imageUrl) formData.append('imageUrl', data.imageUrl);
+        if (data.image) formData.append('image', data.image);
+        return await axiosInstance.post('/events', formData, {
+            headers: { 'Content-Type': 'multipart/form-data' }
+        });
     },
 
     registerForEvent: async (eventId, memberId) => {
@@ -29,8 +39,19 @@ const eventApi = {
         return await axiosInstance.delete(`/events/${id}`);
     },
     update: async (id, data) => {
-        return await axiosInstance.put(`/events/${id}`, data);
+        const formData = new FormData();
+        formData.append('title', data.title);
+        formData.append('description', data.description);
+        formData.append('eventDate', data.eventDate);
+        formData.append('location', data.location);
+        formData.append('type', data.type);
+        if (data.imageUrl) formData.append('imageUrl', data.imageUrl);
+        if (data.image) formData.append('image', data.image);
+        return await axiosInstance.put(`/events/${id}`, formData, {
+            headers: { 'Content-Type': 'multipart/form-data' }
+        });
     },
+
     isRegistered: async (eventId, memberId) => {
         return await axiosInstance.get(`/events/${eventId}/is-registered/${memberId}`);
     },

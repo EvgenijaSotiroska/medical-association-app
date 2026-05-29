@@ -88,4 +88,10 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.BAD_REQUEST)
                 .body(ApiError.of(HttpStatus.BAD_REQUEST, ex.getMessage()));
     }
+    @ExceptionHandler(InvalidFileTypeException.class)
+    public ResponseEntity<ApiError> handleInvalidFileType(InvalidFileTypeException ex) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(ApiError.of(HttpStatus.BAD_REQUEST, ex.getMessage()));
+    }
 }

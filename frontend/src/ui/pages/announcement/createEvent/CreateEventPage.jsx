@@ -9,9 +9,9 @@ export default function CreateEventPage() {
         description: "",
         eventDate: "",
         location: "",
-        imageUrl: "",
         type: "CONGRESS"
     });
+    const [imageFile, setImageFile] = useState(null);
 
     const { createEvent, loading, error, success } = useCreateEvent();
     const navigate = useNavigate();
@@ -24,7 +24,7 @@ export default function CreateEventPage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await createEvent(form);
+            await createEvent({ ...form, image: imageFile });
         } catch (_) {}
     };
 
@@ -57,9 +57,9 @@ export default function CreateEventPage() {
                                         description: "",
                                         eventDate: "",
                                         location: "",
-                                        imageUrl: "",
                                         type: "CONGRESS"
                                     });
+                                    setImageFile(null);
                                 }}
                             >
                                 Креирај уште еден
@@ -69,7 +69,6 @@ export default function CreateEventPage() {
                 ) : (
                     <form className="create-form" onSubmit={handleSubmit}>
 
-                        {/* Type */}
                         <div className="create-field">
                             <label className="create-label">Тип на настан</label>
                             <div className="create-type-btns">
@@ -86,7 +85,6 @@ export default function CreateEventPage() {
                             </div>
                         </div>
 
-                        {/* Title */}
                         <div className="create-field">
                             <label className="create-label">Наслов</label>
                             <input
@@ -99,7 +97,6 @@ export default function CreateEventPage() {
                             />
                         </div>
 
-                        {/* Description */}
                         <div className="create-field">
                             <label className="create-label">Опис</label>
                             <textarea
@@ -113,7 +110,6 @@ export default function CreateEventPage() {
                             />
                         </div>
 
-                        {/* Date + Location */}
                         <div className="create-row">
                             <div className="create-field">
                                 <label className="create-label">Датум</label>
@@ -139,16 +135,19 @@ export default function CreateEventPage() {
                             </div>
                         </div>
 
-                        {/* Image URL */}
                         <div className="create-field">
-                            <label className="create-label">URL на слика</label>
+                            <label className="create-label">Прикачи слика</label>
                             <input
-                                name="imageUrl"
+                                type="file"
+                                accept="image/*"
                                 className="create-input"
-                                value={form.imageUrl}
-                                onChange={handleChange}
-                                placeholder="https://..."
+                                onChange={(e) => setImageFile(e.target.files[0])}
                             />
+                            {imageFile && (
+                                <p style={{ fontSize: "0.85rem", color: "#555", marginTop: 4 }}>
+                                    🖼️ {imageFile.name}
+                                </p>
+                            )}
                         </div>
 
                         {error && <p className="create-error">{error}</p>}

@@ -66,6 +66,7 @@ public class PublicationServiceImpl implements PublicationService {
         publication.setTitle(request.title());
         publication.setDescription(request.description());
         publication.setImageUrl(request.imageUrl());
+        publication.setDocumentUrl(request.documentUrl()); // ← додај
         publication.setType(request.type());
         return PublicationResponseDto.from(publicationRepository.save(publication));
     }

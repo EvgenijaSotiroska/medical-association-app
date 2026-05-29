@@ -156,10 +156,9 @@ export default function AnnouncementDetailPage() {
     if (!item) return null;
 
     return (
-        <div className="detail-page" onClick={() => navigate(-1)}>
+        <div className="detail-page" onClick={() => navigate("/announcements")}>
             <div className="detail-card" onClick={(e) => e.stopPropagation()}>
-
-                <button className="detail-close-btn" onClick={() => navigate(-1)}>✕</button>
+                <button className="detail-close-btn" onClick={() => navigate("/announcements")}>✕</button>
 
                 {item.imageUrl ? (
                     <img src={item.imageUrl} alt={item.title} className="detail-img" />

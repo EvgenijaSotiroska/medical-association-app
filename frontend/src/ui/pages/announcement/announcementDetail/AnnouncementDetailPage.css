@@ -332,3 +332,22 @@
     color: #9ca3af;
     padding: 1.5rem 0;
 }
+
+.ann-card__doc-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: #2563eb;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 0.4rem 0.75rem;
+    border: 1.5px solid #2563eb;
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+.ann-card__doc-link:hover {
+    background: #2563eb;
+    color: #fff;
+}

@@ -11,6 +11,8 @@ export default function EditAnnouncementPage() {
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState(null);
     const [form, setForm] = useState(null);
+    const [imageFile, setImageFile] = useState(null);
+    const [documentFile, setDocumentFile] = useState(null);
 
     useEffect(() => {
         const request = type === "event"
@@ -39,27 +41,31 @@ export default function EditAnnouncementPage() {
                     description: form.description,
                     eventDate: form.eventDate,
                     location: form.location,
-                    imageUrl: form.imageUrl,
+                    imageUrl: imageFile ? null : form.imageUrl,
+                    image: imageFile,
                     type: form.type
                 });
             } else {
                 await publicationApi.update(id, {
                     title: form.title,
                     description: form.description,
-                    imageUrl: form.imageUrl,
+                    imageUrl: imageFile ? null : form.imageUrl,
+                    image: imageFile,
+                    document: documentFile,
+                    documentUrl: documentFile ? null : form.documentUrl,
                     type: form.type
                 });
+
             }
             navigate(`/announcements/${type}/${id}`);
-        } catch {
-            setError("Грешка при зачувување.");
-        } finally {
+        } catch (err) {
+            setError(err.response?.data?.message || "Грешка при зачувување.");
+        }finally {
             setSaving(false);
         }
     };
 
     const isEvent = type === "event";
-
     const eventTypes = ["CONGRESS", "SEMINAR"];
     const publicationTypes = ["NEWS", "DOCUMENT"];
     const types = isEvent ? eventTypes : publicationTypes;
@@ -84,24 +90,8 @@ export default function EditAnnouncementPage() {
 
                 <form className="edit-form" onSubmit={handleSubmit}>
 
-                    {/* Type */}
-                    <div className="edit-field">
-                        <label className="edit-label">Тип</label>
-                        <div className="edit-type-btns">
-                            {types.map(t => (
-                                <button
-                                    key={t}
-                                    type="button"
-                                    className={`edit-type-btn ${form.type === t ? "active" : ""}`}
-                                    onClick={() => setForm(prev => ({ ...prev, type: t }))}
-                                >
-                                    {typeLabel[t]}
-                                </button>
-                            ))}
-                        </div>
-                    </div>
 
-                    {/* Title */}
+
                     <div className="edit-field">
                         <label className="edit-label">Наслов</label>
                         <input
@@ -113,7 +103,6 @@ export default function EditAnnouncementPage() {
                         />
                     </div>
 
-                    {/* Description */}
                     <div className="edit-field">
                         <label className="edit-label">Опис</label>
                         <textarea
@@ -126,7 +115,6 @@ export default function EditAnnouncementPage() {
                         />
                     </div>
 
-                    {/* Event specific fields */}
                     {isEvent && (
                         <div className="edit-row">
                             <div className="edit-field">
@@ -153,17 +141,61 @@ export default function EditAnnouncementPage() {
                         </div>
                     )}
 
-                    {/* Image URL */}
                     <div className="edit-field">
-                        <label className="edit-label">URL на слика</label>
+                        <label className="edit-label">
+                            {imageFile ? "Нова слика:" : form.imageUrl ? "Тековна слика — прикачи нова за замена:" : "Прикачи слика:"}
+                        </label>
+                        {form.imageUrl && !imageFile && (
+                            <img
+                                src={form.imageUrl}
+                                alt="Тековна слика"
+                                style={{ width: "100%", height: "150px", objectFit: "cover", borderRadius: "8px", marginBottom: "0.5rem" }}
+                            />
+                        )}
                         <input
-                            name="imageUrl"
+                            type="file"
                             className="edit-input"
-                            value={form.imageUrl ?? ""}
-                            onChange={handleChange}
-                            placeholder="https://..."
+                            accept="image/*"
+                            onChange={(e) => setImageFile(e.target.files[0])}
                         />
+                        {imageFile && (
+                            <p style={{ fontSize: "0.85rem", color: "#555", marginTop: 4 }}>
+                                🖼️ {imageFile.name}
+                            </p>
+                        )}
                     </div>
+
+                    {!isEvent && (
+                        <div className="edit-field">
+                            <label className="edit-label">
+                                {form.documentUrl && !documentFile
+                                    ? "Тековен документ — прикачи нов за замена:"
+                                    : "Прикачи документ (PDF):"}
+                            </label>
+                            {form.documentUrl && !documentFile && (
+                                <a
+
+                                href={form.documentUrl}
+                                target="_blank"
+                                rel="noreferrer"
+                                style={{ display: "block", marginBottom: "0.5rem", color: "#2563eb", fontSize: "0.9rem" }}
+                                >
+                                📄 Отвори тековен документ
+                                </a>
+                                )}
+                            <input
+                                type="file"
+                                className="edit-input"
+                                accept="application/pdf,.doc,.docx,.txt"
+                                onChange={(e) => setDocumentFile(e.target.files[0])}
+                            />
+                            {documentFile && (
+                                <p style={{ fontSize: "0.85rem", color: "#555", marginTop: 4 }}>
+                                    📄 {documentFile.name}
+                                </p>
+                            )}
+                        </div>
+                    )}
 
                     {error && <p className="edit-error">{error}</p>}
 

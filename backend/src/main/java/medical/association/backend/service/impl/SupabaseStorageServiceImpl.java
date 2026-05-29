@@ -1,5 +1,6 @@
 package medical.association.backend.service.impl;
 
+import medical.association.backend.model.exception.InvalidFileTypeException;
 import medical.association.backend.service.SupabaseStorageService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -48,6 +49,19 @@ public class SupabaseStorageServiceImpl implements SupabaseStorageService {
                 .toBodilessEntity();
 
         return key;
+    }
+
+    @Override
+    public String uploadImage(MultipartFile file) {
+        String contentType = file.getContentType();
+        if (contentType == null || !contentType.startsWith("image/")) {
+            throw new InvalidFileTypeException("Дозволени се само слики (jpg, png, webp...)");
+        }
+        try {
+            return upload(file);
+        } catch (IOException e) {
+            throw new RuntimeException("Грешка при прикачување на слика.", e);
+        }
     }
 
     @Override
