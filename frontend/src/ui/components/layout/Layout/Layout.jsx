@@ -1,5 +1,7 @@
 import Header from "../Header/Header.jsx";
 import { Outlet } from 'react-router';
+import Footer from "../Footer/Footer.jsx";
+
 import './Layout.css';
 
 const Layout = () => {
@@ -9,6 +11,7 @@ const Layout = () => {
             <main className="outlet-container">
                 <Outlet />
             </main>
+            <Footer />
         </div>
     );
 };
