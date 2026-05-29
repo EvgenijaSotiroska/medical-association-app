@@ -28,6 +28,8 @@ public class MemberProfile extends BaseEntity{
     private String licenseNumber;
     private Integer graduationYear;
 
+    private String profilePicture;
+
     @Enumerated(EnumType.STRING)
     private MembershipStatus status;
 

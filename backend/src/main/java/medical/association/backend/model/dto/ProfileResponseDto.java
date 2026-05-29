@@ -20,7 +20,8 @@ public record ProfileResponseDto(
         String specialization,
         String subSpecialization,
         String licenseNumber,
-        Integer graduationYear
+        Integer graduationYear,
+        String profilePicture
 ) {
     public static ProfileResponseDto from(User user, MemberProfile profile) {
         return new ProfileResponseDto(
@@ -38,7 +39,8 @@ public record ProfileResponseDto(
                 profile != null ? profile.getSpecialization() : null,
                 profile != null ? profile.getSubSpecialization() : null,
                 profile != null ? profile.getLicenseNumber() : null,
-                profile != null ? profile.getGraduationYear() : null
+                profile != null ? profile.getGraduationYear() : null,
+                profile != null ? profile.getProfilePicture() : null
         );
     }
 }

@@ -10,4 +10,6 @@ public interface ProfileService {
     ProfileResponseDto updateProfile(String username, UpdateProfileRequestDto request);
     void updatePassword(String username, UpdatePasswordRequestDto request);
     void updateEmail(String username, UpdateEmailRequestDto request);
+    void updateProfilePicture(String username, String url);
+
 }

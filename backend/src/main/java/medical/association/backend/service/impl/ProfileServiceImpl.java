@@ -88,4 +88,14 @@ public class ProfileServiceImpl implements ProfileService {
         user.setEmail(request.newEmail());
         userRepository.save(user);
     }
+
+    @Override
+    public void updateProfilePicture(String username, String url) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UserNotFoundException(username));
+        MemberProfile profile = memberProfileRepository.findByUserId(user.getId())
+                .orElseThrow(() -> new UserNotFoundException(username));
+        profile.setProfilePicture(url);
+        memberProfileRepository.save(profile);
+    }
 }

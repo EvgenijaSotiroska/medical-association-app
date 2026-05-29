@@ -101,6 +101,22 @@ export default function ProfilePage() {
         } catch (_) {}
     };
 
+    const handleAvatarUpload = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const formData = new FormData();
+        formData.append("image", file);
+        const token = localStorage.getItem("token");
+        const res = await fetch("http://localhost:8080/api/profile/picture", {
+            method: "POST",
+            headers: { Authorization: `Bearer ${token}` },
+            body: formData
+        });
+        if (res.ok) {
+            fetchProfile();
+        }
+    };
+
     if (loading) return <div className="profile-empty">Се вчитува...</div>;
     if (error) return <div className="profile-empty">{error}</div>;
     if (!profile || !profileForm) return null;
@@ -110,8 +126,15 @@ export default function ProfilePage() {
 
             {/* Header */}
             <div className="profile-header">
-                <div className="profile-avatar">
-                    {profile.firstName?.[0]}{profile.lastName?.[0]}
+                <div className="profile-avatar" onClick={() => document.getElementById('avatarInput').click()}
+                     style={{cursor: 'pointer'}}>
+                    {profile.profilePicture
+                        ? <img src={profile.profilePicture} alt="avatar"
+                               style={{width:'100%', height:'100%', borderRadius:'50%', objectFit:'cover'}} />
+                        : <>{profile.firstName?.[0]}{profile.lastName?.[0]}</>
+                    }
+                    <input id="avatarInput" type="file" accept="image/*"
+                           style={{display:'none'}} onChange={handleAvatarUpload} />
                 </div>
                 <div>
                     <h1 className="profile-name">{profile.firstName} {profile.lastName}</h1>

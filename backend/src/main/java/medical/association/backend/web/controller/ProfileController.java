@@ -7,6 +7,9 @@ import medical.association.backend.model.dto.UpdateProfileRequestDto;
 import medical.association.backend.service.ProfileService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import medical.association.backend.service.impl.SupabaseStorageServiceImpl;
+import org.springframework.http.MediaType;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
 
@@ -15,10 +18,14 @@ import java.security.Principal;
 public class ProfileController {
 
     private final ProfileService profileService;
+    private final SupabaseStorageServiceImpl supabaseStorageService;
 
-    public ProfileController(ProfileService profileService) {
+
+    public ProfileController(ProfileService profileService, SupabaseStorageServiceImpl supabaseStorageService) {
         this.profileService = profileService;
+        this.supabaseStorageService = supabaseStorageService;
     }
+
 
     @GetMapping
     public ResponseEntity<ProfileResponseDto> getProfile(Principal principal) {
@@ -46,5 +53,15 @@ public class ProfileController {
             @RequestBody UpdateEmailRequestDto request) {
         profileService.updateEmail(principal.getName(), request);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping(value = "/picture", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<String> uploadProfilePicture(
+            @RequestParam("image") MultipartFile image,
+            Principal principal) throws Exception {
+        String key = supabaseStorageService.uploadImage(image);
+        String url = supabaseStorageService.getPublicUrl(key);
+        profileService.updateProfilePicture(principal.getName(), url);
+        return ResponseEntity.ok(url);
     }
 }
