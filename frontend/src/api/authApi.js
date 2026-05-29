@@ -20,7 +20,15 @@ const authApi = {
         localStorage.setItem("role", role);
 
         return response.data;
-    }
+    },
+
+    forgotPassword: async (email) => {
+        return await axiosInstance.post('/user/forgot-password', { email });
+    },
+
+    resetPassword: async (data) => {
+        return await axiosInstance.post('/user/reset-password', data);
+    },
 };
 
 export default authApi;

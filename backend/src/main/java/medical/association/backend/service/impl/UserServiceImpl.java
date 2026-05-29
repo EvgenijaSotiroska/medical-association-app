@@ -4,19 +4,19 @@ import medical.association.backend.helpers.JwtHelper;
 import medical.association.backend.model.domain.MemberProfile;
 import medical.association.backend.model.domain.User;
 import medical.association.backend.model.dto.*;
-import medical.association.backend.model.exception.AccountNotApprovedException;
-import medical.association.backend.model.exception.IncorrectPasswordException;
-import medical.association.backend.model.exception.UserNotFoundException;
-import medical.association.backend.model.exception.UsernameAlreadyExistsException;
+import medical.association.backend.model.exception.*;
 import medical.association.backend.repository.MemberProfileRepository;
 import medical.association.backend.repository.UserRepository;
+import medical.association.backend.service.EmailService;
 import medical.association.backend.service.UserService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -24,12 +24,14 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final MemberProfileRepository memberProfileRepository;
+    private final EmailService emailService;
 
-    public UserServiceImpl(JwtHelper jwtHelper, PasswordEncoder passwordEncoder, UserRepository userRepository, MemberProfileRepository memberProfileRepository) {
+    public UserServiceImpl(JwtHelper jwtHelper, PasswordEncoder passwordEncoder, UserRepository userRepository, MemberProfileRepository memberProfileRepository, EmailService emailService) {
         this.jwtHelper = jwtHelper;
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.memberProfileRepository = memberProfileRepository;
+        this.emailService = emailService;
     }
 
     @Override
@@ -90,5 +92,38 @@ public class UserServiceImpl implements UserService {
         return userRepository
                 .findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException(username));
+    }
+
+    @Override
+    public void forgotPassword(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException(email));
+
+        String token = UUID.randomUUID().toString();
+        user.setResetToken(token);
+        user.setResetTokenExpiry(LocalDateTime.now().plusHours(1));
+        userRepository.save(user);
+
+        String resetLink = "http://localhost:5173/reset-password?token=" + token;
+        emailService.sendPasswordResetEmail(email, resetLink);
+    }
+
+    @Override
+    public void resetPassword(ResetPasswordRequestDto request) {
+        User user = userRepository.findByResetToken(request.token())
+                .orElseThrow(() -> new RuntimeException("Невалиден токен."));
+
+        if (user.getResetTokenExpiry().isBefore(LocalDateTime.now())) {
+            throw new RuntimeException("Токенот е истечен.");
+        }
+
+        if (!request.newPassword().equals(request.confirmNewPassword())) {
+            throw new PasswordsDoNotMatchException();
+        }
+
+        user.setPassword(passwordEncoder.encode(request.newPassword()));
+        user.setResetToken(null);
+        user.setResetTokenExpiry(null);
+        userRepository.save(user);
     }
 }

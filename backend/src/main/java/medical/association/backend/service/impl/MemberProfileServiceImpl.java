@@ -45,7 +45,8 @@ public class MemberProfileServiceImpl implements MemberProfileService {
                         p.getSubSpecialization(),
                         p.getLicenseNumber(),
                         p.getGraduationYear(),
-                        p.getStatus()
+                        p.getStatus(),
+                        p.getProfilePicture()
                 ))
                 .toList();
     }
@@ -96,7 +97,8 @@ public class MemberProfileServiceImpl implements MemberProfileService {
                         p.getSubSpecialization(),
                         p.getLicenseNumber(),
                         p.getGraduationYear(),
-                        p.getStatus()
+                        p.getStatus(),
+                        p.getProfilePicture()
                 ))
                 .toList();
     }

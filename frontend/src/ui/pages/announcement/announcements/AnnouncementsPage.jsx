@@ -42,9 +42,9 @@ export default function AnnouncementsPage() {
 
     const handleCardClick = (item) => {
         if (item.category === "EVENT") {
-            navigate(`/announcements/event/${item.id}`);
+            navigate(`/announcements/event/${item.id}`, { state: { from: '/announcements' } });
         } else {
-            navigate(`/announcements/publication/${item.id}`);
+            navigate(`/announcements/publication/${item.id}`, { state: { from: '/announcements' } });
         }
     };
 

@@ -18,5 +18,6 @@ public record ApprovedMemberDto(
         String subSpecialization,
         String licenseNumber,
         Integer graduationYear,
-        MembershipStatus status
+        MembershipStatus status,
+        String profilePicture
 ) {}

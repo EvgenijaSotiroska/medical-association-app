@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from "react-router";
+import { useParams, useNavigate, useLocation } from "react-router";
 import { useState, useEffect } from "react";
 import eventApi from "../../../../api/eventApi.js";
 import publicationApi from "../../../../api/publicationApi.js";
@@ -9,7 +9,11 @@ import { getUserRole } from "../../../../utils/auth.js";
 export default function AnnouncementDetailPage() {
     const { id } = useParams();
     const navigate = useNavigate();
+    const location = useLocation();
     const type = window.location.pathname.includes("/event/") ? "event" : "publication";
+
+    const from = location.state?.from;
+    const backTo = (from && !from.includes('/edit')) ? from : "/announcements";
 
     const [item, setItem] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -156,9 +160,9 @@ export default function AnnouncementDetailPage() {
     if (!item) return null;
 
     return (
-        <div className="detail-page" onClick={() => navigate("/announcements")}>
+        <div className="detail-page" onClick={() => navigate(backTo)}>
             <div className="detail-card" onClick={(e) => e.stopPropagation()}>
-                <button className="detail-close-btn" onClick={() => navigate("/announcements")}>✕</button>
+                <button className="detail-close-btn" onClick={() => navigate(backTo)}>✕</button>
 
                 {item.imageUrl ? (
                     <img src={item.imageUrl} alt={item.title} className="detail-img" />
@@ -340,7 +344,6 @@ export default function AnnouncementDetailPage() {
                             )}
                         </div>
                     )}
-
                 </div>
             </div>
         </div>

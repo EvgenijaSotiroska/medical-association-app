@@ -1,8 +1,26 @@
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
+import { jwtDecode } from "jwt-decode";
 import "./Footer.css";
 
 export default function Footer() {
-    const isAuthenticated = !!localStorage.getItem("token");
+    const location = useLocation();
+
+    const token = localStorage.getItem("token");
+    let isAuthenticated = false;
+
+    if (token) {
+        try {
+            const decoded = jwtDecode(token);
+            const currentTime = Date.now() / 1000;
+            if (decoded.exp > currentTime) {
+                isAuthenticated = true;
+            } else {
+                localStorage.removeItem("token");
+            }
+        } catch (e) {
+            localStorage.removeItem("token");
+        }
+    }
 
     return (
         <footer className="footer">

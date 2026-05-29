@@ -12,4 +12,7 @@ public interface UserService extends UserDetailsService {
     Optional<LoginUserResponseDto> login(LoginUserRequestDto loginUserRequestDto);
 
     Optional<User> findByUsername(String username);
+
+    void forgotPassword(String email);
+    void resetPassword(ResetPasswordRequestDto request);
 }

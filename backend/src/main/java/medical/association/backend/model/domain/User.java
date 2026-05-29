@@ -7,6 +7,8 @@ import lombok.Setter;
 import medical.association.backend.enumeration.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -30,6 +32,9 @@ public class User extends BaseEntity implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    private String resetToken;
+    private LocalDateTime resetTokenExpiry;
 
     public User(String email, String username, String password) {
         this.email = email;

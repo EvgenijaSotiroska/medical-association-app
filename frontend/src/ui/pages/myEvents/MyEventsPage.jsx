@@ -39,7 +39,7 @@ export default function MyEventsPage() {
                         <div
                             key={reg.id}
                             className="myevents-card"
-                            onClick={() => navigate(`/announcements/event/${reg.eventId}`)}
+                            onClick={() => navigate(`/announcements/event/${reg.eventId}`, { state: { from: '/my-events' } })}
                         >
                             <div className="myevents-card__body">
                                 <h3 className="myevents-card__title">{reg.eventTitle}</h3>

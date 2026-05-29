@@ -70,6 +70,9 @@ export default function LoginPage() {
                         {loading ? "Се најавува..." : "Најави се"}
                     </button>
                 </form>
+                <p className="auth-footer">
+                    <Link to="/forgot-password" className="auth-link">Заборавена лозинка?</Link>
+                </p>
 
                 <p className="auth-footer">
                     Нов член?{" "}

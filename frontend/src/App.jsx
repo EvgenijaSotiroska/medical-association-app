@@ -14,6 +14,10 @@ import HomePage from "./ui/pages/home/HomePage.jsx";
 import ApprovedMembersPage from "./ui/pages/memberProfile/ApprovedMembersPage.jsx";
 import ProfilePage from "./ui/pages/profile/ProfilePage.jsx";
 import MyEventsPage from "./ui/pages/myEvents/MyEventsPage.jsx";
+import ForgotPasswordPage from "./ui/pages/auth/ForgotPasswordPage.jsx";
+import ResetPasswordPage from "./ui/pages/auth/ResetPasswordPage.jsx";
+
+
 
 
 
@@ -52,6 +56,9 @@ function App() {
                         </ProtectedRoute>} />
                     <Route path='profile' element={<ProfilePage/>}/>
                     <Route path='my-events' element={<MyEventsPage/>}/>
+
+                    <Route path='forgot-password' element={<ForgotPasswordPage/>}/>
+                    <Route path='reset-password' element={<ResetPasswordPage/>}/>
                 </Route>
             </Routes>
         </BrowserRouter>

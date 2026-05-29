@@ -48,7 +48,15 @@ export default function MemberDetailModal({ member, onClose, onStatusChange }) {
                 {/* Header */}
                 <div className="mdm__header">
                     <div className="mdm__avatar">
-                        {member.firstName?.[0]}{member.lastName?.[0]}
+                        {member.profilePicture ? (
+                            <img
+                                src={member.profilePicture}
+                                alt={member.firstName}
+                                style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "50%" }}
+                            />
+                        ) : (
+                            <>{member.firstName?.[0]}{member.lastName?.[0]}</>
+                        )}
                     </div>
 
                     <div className="mdm__header-text">

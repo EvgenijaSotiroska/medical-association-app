@@ -17,5 +17,6 @@ public record MemberProfileDisplayDto(
         String subSpecialization,
         String licenseNumber,
         Integer graduationYear,
-        MembershipStatus status
+        MembershipStatus status,
+        String profilePicture
 ) {}

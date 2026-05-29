@@ -31,4 +31,19 @@ public class EmailServiceImpl implements EmailService {
 
         mailSender.send(message);
     }
+
+    @Override
+    public void sendPasswordResetEmail(String mailTo, String resetLink) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(mailTo);
+        message.setSubject("Ресетирање на лозинка");
+        message.setText("Почитуван/а,\n\n" +
+                "Примивме барање за ресетирање на вашата лозинка.\n\n" +
+                "Кликнете на линкот подолу за да поставите нова лозинка:\n" +
+                resetLink + "\n\n" +
+                "Линкот е валиден 1 час.\n\n" +
+                "Доколку не сте го побарале ова, игнорирајте го мејлот.\n\n" +
+                "Здружение на интернисти на РСМ");
+        mailSender.send(message);
+    }
 }

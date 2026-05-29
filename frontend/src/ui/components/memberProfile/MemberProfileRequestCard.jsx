@@ -15,9 +15,13 @@ export default function MemberProfileRequestCard({ member , onStatusChange }) {
         <>
             <div className="member-card" onClick={() => setModalOpen(true)}>
                 <div className="member-card__avatar">
-                    {member.firstName?.[0]}{member.lastName?.[0]}
+                    {member.profilePicture ? (
+                        <img src={member.profilePicture} alt={member.firstName}
+                             style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "50%" }} />
+                    ) : (
+                        <>{member.firstName?.[0]}{member.lastName?.[0]}</>
+                    )}
                 </div>
-
                 <div className="member-card__body">
                     <h3 className="member-card__name">
                         {member.firstName} {member.lastName}
