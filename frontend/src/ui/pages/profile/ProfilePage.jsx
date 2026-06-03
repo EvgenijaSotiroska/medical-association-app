@@ -3,6 +3,7 @@ import useProfile from "../../../hooks/profile/useProfile.js";
 import useUpdateProfile from "../../../hooks/profile/useUpdateProfile.js";
 import useUpdatePassword from "../../../hooks/profile/useUpdatePassword.js";
 import useUpdateEmail from "../../../hooks/profile/useUpdateEmail.js";
+import useUpdateProfilePicture from "../../../hooks/profile/useUpdateProfilePicture.js";
 import "./ProfilePage.css";
 
 export default function ProfilePage() {
@@ -10,6 +11,7 @@ export default function ProfilePage() {
     const { updateProfile, loading: updatingProfile, error: profileError, success: profileSuccess } = useUpdateProfile();
     const { updatePassword, loading: updatingPassword, error: passwordError, success: passwordSuccess } = useUpdatePassword();
     const { updateEmail, loading: updatingEmail, error: emailError, success: emailSuccess } = useUpdateEmail();
+    const { updateProfilePicture, loading: updatingPicture, error: pictureError } = useUpdateProfilePicture();
 
     const [profileForm, setProfileForm] = useState(null);
     const [passwordForm, setPasswordForm] = useState({
@@ -104,17 +106,10 @@ export default function ProfilePage() {
     const handleAvatarUpload = async (e) => {
         const file = e.target.files[0];
         if (!file) return;
-        const formData = new FormData();
-        formData.append("image", file);
-        const token = localStorage.getItem("token");
-        const res = await fetch("http://localhost:8080/api/profile/picture", {
-            method: "POST",
-            headers: { Authorization: `Bearer ${token}` },
-            body: formData
-        });
-        if (res.ok) {
+        try {
+            await updateProfilePicture(file);
             fetchProfile();
-        }
+        } catch (_) {}
     };
 
     if (loading) return <div className="profile-empty">Се вчитува...</div>;
@@ -126,15 +121,23 @@ export default function ProfilePage() {
 
             {/* Header */}
             <div className="profile-header">
-                <div className="profile-avatar" onClick={() => document.getElementById('avatarInput').click()}
-                     style={{cursor: 'pointer'}}>
+                <div
+                    className="profile-avatar"
+                    onClick={() => document.getElementById('avatarInput').click()}
+                    style={{ cursor: updatingPicture ? 'wait' : 'pointer', opacity: updatingPicture ? 0.6 : 1 }}
+                >
                     {profile.profilePicture
                         ? <img src={profile.profilePicture} alt="avatar"
-                               style={{width:'100%', height:'100%', borderRadius:'50%', objectFit:'cover'}} />
+                               style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
                         : <>{profile.firstName?.[0]}{profile.lastName?.[0]}</>
                     }
-                    <input id="avatarInput" type="file" accept="image/*"
-                           style={{display:'none'}} onChange={handleAvatarUpload} />
+                    <input
+                        id="avatarInput"
+                        type="file"
+                        accept="image/*"
+                        style={{ display: 'none' }}
+                        onChange={handleAvatarUpload}
+                    />
                 </div>
                 <div>
                     <h1 className="profile-name">{profile.firstName} {profile.lastName}</h1>
@@ -144,6 +147,7 @@ export default function ProfilePage() {
                     <p className="profile-username">@{profile.username}</p>
                 </div>
             </div>
+            {pictureError && <p className="profile-error">{pictureError}</p>}
 
             {/* Section 1 — Лични и професионални податоци */}
             <div className="profile-card">

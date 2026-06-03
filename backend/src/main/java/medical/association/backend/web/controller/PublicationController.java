@@ -4,7 +4,7 @@ import medical.association.backend.enumeration.PublicationType;
 import medical.association.backend.model.dto.CreatePublicationRequestDto;
 import medical.association.backend.model.dto.PublicationResponseDto;
 import medical.association.backend.service.PublicationService;
-import medical.association.backend.service.impl.SupabaseStorageServiceImpl;
+import medical.association.backend.service.SupabaseStorageService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,9 +17,9 @@ import java.util.List;
 public class PublicationController {
 
     private final PublicationService publicationService;
-    private final SupabaseStorageServiceImpl supabaseStorageService;
+    private final SupabaseStorageService supabaseStorageService;
 
-    public PublicationController(PublicationService publicationService, SupabaseStorageServiceImpl supabaseStorageService) {
+    public PublicationController(PublicationService publicationService, SupabaseStorageService supabaseStorageService) {
         this.publicationService = publicationService;
         this.supabaseStorageService = supabaseStorageService;
     }

@@ -117,7 +117,7 @@ export default function Header() {
                         Одјави се
                     </button>
                 ) : (
-                    <Link to="/login" className="btn-primary" onClick={() => setMenuOpen(false)}>
+                    <Link to="/login" className="btn-primary" style={{ color: 'white' }} onClick={() => setMenuOpen(false)}>
                         Најава
                     </Link>
                 )}
