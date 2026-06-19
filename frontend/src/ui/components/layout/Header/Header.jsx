@@ -1,8 +1,9 @@
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import {Link, useNavigate, useLocation} from "react-router";
 import './Header.css';
 import { jwtDecode } from "jwt-decode";
 import {getUserRole} from "../../../../utils/auth.js";
+import usePendingMemberProfiles from "../../../../hooks/memberProfiles/usePendingMemberProfiles.js";
 
 export default function Header() {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -30,6 +31,14 @@ export default function Header() {
     const role = getUserRole();
     const isAdmin = role === "ROLE_ADMINISTRATOR";
 
+    const { memberProfilesPending, fetchPending } = usePendingMemberProfiles(isAdmin);
+
+    useEffect(() => {
+        if (isAdmin) fetchPending();
+    }, [location.pathname]);
+
+    const pendingCount = memberProfilesPending.length;
+
     const handleLogout = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("memberId");
@@ -55,7 +64,12 @@ export default function Header() {
                         <>
                             <Link to="/create-event" className={isActive("/create-event")}>Креирај настан</Link>
                             <Link to="/create-publication" className={isActive("/create-publication")}>Креирај објава</Link>
-                            <Link to="/memberRequests" className={isActive("/memberRequests")}>Барања за членство</Link>
+                            <Link to="/memberRequests" className={isActive("/memberRequests")} style={{ position: "relative" }}>
+                                Барања за членство
+                                {pendingCount > 0 && (
+                                    <span className="nav-badge">{pendingCount}</span>
+                                )}
+                            </Link>
                             <Link to="/approvedMembers" className={isActive("/approvedMembers")}>Одобрени членови</Link>
                         </>
                     )}
@@ -98,7 +112,12 @@ export default function Header() {
                     <>
                         <Link to="/create-event" className={isActive("/create-event")} onClick={() => setMenuOpen(false)}>Креирај настан</Link>
                         <Link to="/create-publication" className={isActive("/create-publication")} onClick={() => setMenuOpen(false)}>Креирај објава</Link>
-                        <Link to="/memberRequests" className={isActive("/memberRequests")} onClick={() => setMenuOpen(false)}>Барања за членство</Link>
+                        <Link to="/memberRequests" className={isActive("/memberRequests")} style={{ position: "relative" }} onClick={() => setMenuOpen(false)}>
+                            Барања за членство
+                            {pendingCount > 0 && (
+                                <span className="nav-badge">{pendingCount}</span>
+                            )}
+                        </Link>
                         <Link to="/approvedMembers" className={isActive("/approvedMembers")} onClick={() => setMenuOpen(false)}>Одобрени членови</Link>
                     </>
                 )}

@@ -260,6 +260,34 @@
     background: var(--zi-navy-hover);
 }
 
+.password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-wrapper .auth-input {
+    width: 100%;
+    padding-right: 45px;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 12px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    font-size: 18px;
+}
+
+.password-toggle:hover {
+    color: #333;
+}
+
 /* ════════════════════════════════
    RESPONSIVE
    ════════════════════════════════ */

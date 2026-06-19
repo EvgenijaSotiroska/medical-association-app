@@ -7,10 +7,12 @@ const initialState = {
     error: null
 };
 
-const usePendingMemberProfiles = () => {
+const usePendingMemberProfiles = (enabled = true) => {
     const [state, setState] = useState(initialState);
 
     const fetchPending = useCallback(() => {
+        if (!enabled) return;   // ← don't fetch if not admin
+
         setState(prev => ({ ...prev, loading: true }));
 
         memberProfileApi
@@ -23,14 +25,13 @@ const usePendingMemberProfiles = () => {
                 });
             })
             .catch((error) => {
-                console.log(error);
                 setState({
                     memberProfilesPending: [],
                     loading: false,
                     error
                 });
             });
-    }, []);
+    }, [enabled]);   // ← re-run when enabled changes
 
     useEffect(() => {
         fetchPending();

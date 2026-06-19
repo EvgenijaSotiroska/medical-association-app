@@ -88,7 +88,7 @@ export default function RegisterPage() {
                         </Link>
                     </div>
                 ) : (
-                    <form className="auth-form" onSubmit={handleSubmit}>
+                    <form className="auth-form" autoComplete="on" name="register" onSubmit={handleSubmit}>
                         {/* Personal */}
                         <h3 className="auth-section-title">Лични податоци</h3>
 
@@ -122,11 +122,37 @@ export default function RegisterPage() {
                         {/* Auth */}
                         <h3 className="auth-section-title">Кориснички податоци</h3>
 
-                        <input name="username" placeholder="Корисничко име" className="auth-input" onChange={handleChange} required />
+                        <input
+                            id="username"
+                            name="username"
+                            autoComplete="username"
+                            placeholder="Корисничко име"
+                            className="auth-input"
+                            onChange={handleChange}
+                            required
+                        />
 
                         <div className="auth-row">
-                            <input type="password" name="password" placeholder="Лозинка" className="auth-input" onChange={handleChange} required />
-                            <input type="password" name="confirmPassword" placeholder="Потврди лозинка" className="auth-input" onChange={handleChange} required />
+                            <input
+                                id="password"
+                                type="password"
+                                name="password"
+                                autoComplete="new-password"
+                                placeholder="Лозинка"
+                                className="auth-input"
+                                onChange={handleChange}
+                                required
+                            />
+                            <input
+                                id="confirm-password"
+                                type="password"
+                                name="confirmPassword"
+                                autoComplete="new-password"
+                                placeholder="Потврди лозинка"
+                                className="auth-input"
+                                onChange={handleChange}
+                                required
+                            />
                         </div>
 
                         {/* Professional */}

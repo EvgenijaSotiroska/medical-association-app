@@ -1,23 +1,30 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "./AuthPages.css";
-import {useLogin} from "../../../hooks/auth/useLogin.js";
+import { useLogin } from "../../../hooks/auth/useLogin.js";
 
 export default function LoginPage() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
     const [localError, setLocalError] = useState(null);
+
     const { login, loading } = useLogin();
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLocalError(null);
+
         try {
             await login(username, password);
             navigate("/");
         } catch (err) {
-            setLocalError(err.response?.data?.message || "Погрешно корисничко име или лозинка");
+            setLocalError(
+                err.response?.data?.message ||
+                "Погрешно корисничко име или лозинка"
+            );
         }
     };
 
@@ -49,15 +56,26 @@ export default function LoginPage() {
                         <label className="auth-label" htmlFor="password">
                             Лозинка
                         </label>
-                        <input
-                            id="password"
-                            className="auth-input"
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                            autoComplete="current-password"
-                        />
+
+                        <div className="password-wrapper">
+                            <input
+                                id="password"
+                                className="auth-input"
+                                type={showPassword ? "text" : "password"}
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                                autoComplete="current-password"
+                            />
+
+                            <button
+                                type="button"
+                                className="password-toggle"
+                                onClick={() => setShowPassword(!showPassword)}
+                            >
+                                {showPassword ? <FaEyeSlash /> : <FaEye />}
+                            </button>
+                        </div>
                     </div>
 
                     {localError && <p className="auth-error">{localError}</p>}
@@ -70,8 +88,11 @@ export default function LoginPage() {
                         {loading ? "Се најавува..." : "Најави се"}
                     </button>
                 </form>
+
                 <p className="auth-footer">
-                    <Link to="/forgot-password" className="auth-link">Заборавена лозинка?</Link>
+                    <Link to="/forgot-password" className="auth-link">
+                        Заборавена лозинка?
+                    </Link>
                 </p>
 
                 <p className="auth-footer">
