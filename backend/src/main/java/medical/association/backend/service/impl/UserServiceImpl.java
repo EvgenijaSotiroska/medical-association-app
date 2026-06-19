@@ -9,6 +9,7 @@ import medical.association.backend.repository.MemberProfileRepository;
 import medical.association.backend.repository.UserRepository;
 import medical.association.backend.service.EmailService;
 import medical.association.backend.service.UserService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,6 +26,9 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final MemberProfileRepository memberProfileRepository;
     private final EmailService emailService;
+
+    @Value("${app.frontend-url}")
+    private String frontendUrl;
 
     public UserServiceImpl(JwtHelper jwtHelper, PasswordEncoder passwordEncoder, UserRepository userRepository, MemberProfileRepository memberProfileRepository, EmailService emailService) {
         this.jwtHelper = jwtHelper;
@@ -104,7 +108,7 @@ public class UserServiceImpl implements UserService {
         user.setResetTokenExpiry(LocalDateTime.now().plusHours(1));
         userRepository.save(user);
 
-        String resetLink = "http://localhost:5173/reset-password?token=" + token;
+        String resetLink = frontendUrl + "/reset-password?token=" + token;
         emailService.sendPasswordResetEmail(email, resetLink);
     }
 

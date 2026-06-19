@@ -34,6 +34,7 @@ public class EmailServiceImpl implements EmailService {
         mailSender.send(message);
     }
 
+    @Async
     @Override
     public void sendPasswordResetEmail(String mailTo, String resetLink) {
         SimpleMailMessage message = new SimpleMailMessage();
